@@ -10,7 +10,7 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-    const $existingSection = document.querySelector('section');
+    var $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
     $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
     if (prevOrUpcoming === 'upcoming') {
@@ -25,16 +25,16 @@ function launchListSwitch(prevOrUpcoming) {
 }
 
 function renderLaunchItem(launchAPIData, i) {
-  const $launchItem = document.createElement('button');
+  var $launchItem = document.createElement('button');
   $launchItem.className = 'launch-item';
   $launchItem.setAttribute('data-id', i);
 
-  const $launchItemImg = document.createElement('img');
+  var $launchItemImg = document.createElement('img');
   $launchItemImg.src = 'images/rocketwhite.png';
   $launchItemImg.alt = 'Rocket icon';
   $launchItem.appendChild($launchItemImg);
 
-  const $launchItemP = document.createElement('p');
+  var $launchItemP = document.createElement('p');
   $launchItemP.textContent = launchAPIData.results[i].name;
   $launchItem.appendChild($launchItemP);
 
@@ -52,9 +52,9 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
     grayButtonContent = 'View Recent Launches';
   }
 
-  const $newSection = document.createElement('section');
+  var $newSection = document.createElement('section');
 
-  const $h1 = document.createElement('h1');
+  var $h1 = document.createElement('h1');
   $h1.textContent = h1Content;
   $newSection.appendChild($h1);
 
@@ -63,7 +63,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
       $newSection.appendChild(renderLaunchItem(launchAPIData, i));
     }
 
-    const $grayButton = document.createElement('button');
+    var $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
     $grayButton.addEventListener('click', function() {
       launchListSwitch(altView);
