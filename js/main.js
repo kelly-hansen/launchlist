@@ -1,18 +1,20 @@
+var currentView = 'upcoming';
+
 var $main = document.querySelector('main');
 
-var launchList;
+var upcomingLaunchList;
 var xhrLaunches = new XMLHttpRequest();
 xhrLaunches.open('GET', 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?format=json');
 xhrLaunches.responseType = 'json';
 xhrLaunches.addEventListener('load', function () {
-  launchList = xhrLaunches.response;
-  if (!launchList.results) {
+  upcomingLaunchList = xhrLaunches.response;
+  if (!upcomingLaunchList.results) {
     const $loadingMsg = document.querySelector('.loading-msg');
-    $loadingMsg.textContent = launchList.detail;
+    $loadingMsg.textContent = upcomingLaunchList.detail;
   } else {
     const $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
-    $main.appendChild(renderUpcomingLaunches(launchList));
+    $main.appendChild(renderLaunchList(upcomingLaunchList));
   }
 });
 xhrLaunches.send();
@@ -34,7 +36,7 @@ function renderLaunchItem(launchAPIData, i) {
   return $launchItem;
 }
 
-function renderUpcomingLaunches(launchAPIData) {
+function renderLaunchList(launchAPIData) {
   const $newSection = document.createElement('section');
 
   const $h1 = document.createElement('h1');
