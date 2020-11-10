@@ -5,7 +5,7 @@ body {
 }
 
 header {
-  height: 5rem;
+  height: 4rem;
   background-color: rgb(50, 50, 50);
   font-family: 'Gugi', 'Roboto', Arial, Helvetica, sans-serif;
   display: flex;
@@ -18,6 +18,6 @@ header h1 {
 }
 
 header img {
-  width: 3rem;
+  width: 2.5rem;
   margin-right: 0.5rem;
 }
