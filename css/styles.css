@@ -1,0 +1,23 @@
+body {
+  background-color: rgb(80, 80, 80);
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+header {
+  height: 5rem;
+  background-color: rgb(50, 50, 50);
+  font-family: 'Gugi', 'Roboto', Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  font-weight: normal;
+}
+
+header img {
+  width: 3rem;
+  margin-right: 0.5rem;
+}
