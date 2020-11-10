@@ -73,5 +73,6 @@ main h1 {
 }
 
 .gray-button:hover {
+  cursor: pointer;
   background-color: rgb(140, 140, 140);
 }
