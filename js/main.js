@@ -1,4 +1,5 @@
 var currentView = 'upcoming';
+var altView = 'previous';
 
 var $main = document.querySelector('main');
 
@@ -12,7 +13,13 @@ function launchListSwitch(prevOrUpcoming) {
     const $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
     $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
-    currentView = prevOrUpcoming;
+    if (prevOrUpcoming === 'upcoming') {
+      currentView = 'upcoming';
+      altView = 'previous';
+    } else {
+      currentView = 'previous';
+      altView = 'upcoming';
+    }
   });
   xhrLaunches.send();
 }
@@ -58,7 +65,11 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
 
     const $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
+    $grayButton.addEventListener('click', function() {
+      launchListSwitch(altView);
+    });
     $grayButton.textContent = grayButtonContent;
+
     $newSection.appendChild($grayButton);
   } else {
     var $h3 = document.createElement('h3');
@@ -75,7 +86,6 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
     $loadingImg.setAttribute('alt', 'Rocket icon');
     $loadingDiv.appendChild($loadingImg);
   }
-
 
   return $newSection;
 }
