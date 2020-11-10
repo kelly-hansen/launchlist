@@ -2,24 +2,17 @@ var currentView = 'upcoming';
 
 var $main = document.querySelector('main');
 
-var upcomingLaunchList;
-var previousLaunchList;
-
-function getLaunchList(prevOrUpcoming) {
+var launchList;
+function launchListSwitch(prevOrUpcoming) {
   var xhrLaunches = new XMLHttpRequest();
   xhrLaunches.open('GET', 'https://ll.thespacedevs.com/2.0.0/launch/' + prevOrUpcoming + '/?format=json');
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
-    if (prevOrUpcoming === 'upcoming') {
-      upcomingLaunchList = xhrLaunches.response;
-    } else if (prevOrUpcoming === 'previous') {
-      previousLaunchList = xhrLaunches.response;
-    }
+    launchList = xhrLaunches.response;
 
   });
   xhrLaunches.send();
 }
-
 
 function renderLaunchItem(launchAPIData, i) {
   const $launchItem = document.createElement('button');
