@@ -1,13 +1,13 @@
 body {
   background-color: rgb(60, 60, 60);
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-family: 'Exo 2', Arial, sans-serif;
   color: white;
 }
 
 header {
   height: 4rem;
   background-color: rgb(40, 40, 40);
-  font-family: 'Gugi', 'Roboto', Arial, Helvetica, sans-serif;
+  font-family: 'Gugi', Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
