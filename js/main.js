@@ -9,7 +9,9 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-
+    const $existingSection = document.querySelector('section');
+    $main.removeChild($existingSection);
+    $main.appendChild(renderLaunchList(launchList));
   });
   xhrLaunches.send();
 }
@@ -55,8 +57,5 @@ if (!upcomingLaunchList.results) {
       const $loadingMsg = document.querySelector('.loading-msg');
       $loadingMsg.textContent = upcomingLaunchList.detail;
     } else {
-      const $existingSection = document.querySelector('section');
-      $main.removeChild($existingSection);
-      $main.appendChild(renderLaunchList(upcomingLaunchList));
     }
     */
