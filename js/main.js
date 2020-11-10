@@ -10,6 +10,8 @@ xhrLaunches.addEventListener('load', function () {
     const $loadingMsg = document.querySelector('.loading-msg');
     $loadingMsg.textContent = launchList.detail;
   } else {
+    const $existingSection = document.querySelector('section');
+    $main.removeChild($existingSection);
     $main.appendChild(renderUpcomingLaunches(launchList));
   }
 });
@@ -33,9 +35,6 @@ function renderLaunchItem(launchAPIData, i) {
 }
 
 function renderUpcomingLaunches(launchAPIData) {
-  const $existingSection = document.querySelector('section');
-  $main.removeChild($existingSection);
-
   const $newSection = document.createElement('section');
 
   const $h1 = document.createElement('h1');
