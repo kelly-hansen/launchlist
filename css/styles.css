@@ -1,0 +1,105 @@
+* {
+  font-family: 'Exo 2', Arial, sans-serif;
+}
+
+body {
+  background-color: rgb(60, 60, 60);
+  color: white;
+}
+
+header {
+  height: 4rem;
+  background-color: rgb(40, 40, 40);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  font-weight: normal;
+  font-family: 'Gugi', Arial, sans-serif;
+}
+
+header img {
+  width: 2.5rem;
+  margin-right: 0.5rem;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+main h1 {
+  text-align: center;
+  margin: 2.5rem 0;
+  font-size: 2rem;
+}
+
+.loading-msg {
+  text-align: center;
+  color: gray;
+}
+
+.loading {
+  height: 8rem;
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.loading img {
+  object-fit: contain;
+}
+
+.launch-item {
+  width: 85%;
+  height: 3rem;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(187, 128, 0);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.5s;
+}
+
+.launch-item:hover {
+  cursor: pointer;
+  background-color: rgb(255, 174, 0);
+}
+
+.launch-item img {
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.launch-item p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gray-button {
+  width: 85%;
+  height: 3rem;
+  margin: 1.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(110, 110, 110);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.5s;
+}
+
+.gray-button:hover {
+  cursor: pointer;
+  background-color: rgb(140, 140, 140);
+}
