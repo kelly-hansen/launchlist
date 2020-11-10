@@ -11,7 +11,7 @@ function launchListSwitch(prevOrUpcoming) {
     launchList = xhrLaunches.response;
     const $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
-    $main.appendChild(renderLaunchList(launchList));
+    $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
   });
   xhrLaunches.send();
 }
@@ -33,11 +33,21 @@ function renderLaunchItem(launchAPIData, i) {
   return $launchItem;
 }
 
-function renderLaunchList(launchAPIData) {
+function renderLaunchList(launchAPIData, prevOrUpcoming) {
+  var h1Content;
+  var grayButtonContent;
+  if (prevOrUpcoming === 'previous') {
+    h1Content = 'Recent Rocket Launches';
+    grayButtonContent = 'View Upcoming Launches';
+  } else if (prevOrUpcoming === 'upcoming') {
+    h1Content = 'Upcoming Rocket Launches';
+    grayButtonContent = 'View Recent Launches';
+  }
+
   const $newSection = document.createElement('section');
 
   const $h1 = document.createElement('h1');
-  $h1.textContent = 'Upcoming Rocket Launches';
+  $h1.textContent = h1Content;
   $newSection.appendChild($h1);
 
   if (launchAPIData.results) {
@@ -47,7 +57,7 @@ function renderLaunchList(launchAPIData) {
 
     const $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
-    $grayButton.textContent = 'View Recent Launches';
+    $grayButton.textContent = grayButtonContent;
     $newSection.appendChild($grayButton);
   } else {
     var $h3 = document.createElement('h3');
