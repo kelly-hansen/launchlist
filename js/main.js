@@ -40,14 +40,31 @@ function renderLaunchList(launchAPIData) {
   $h1.textContent = 'Upcoming Rocket Launches';
   $newSection.appendChild($h1);
 
-  for (let i = 0; i < 10; i++) {
-    $newSection.appendChild(renderLaunchItem(launchAPIData, i));
+  if (launchAPIData.results) {
+    for (let i = 0; i < 10; i++) {
+      $newSection.appendChild(renderLaunchItem(launchAPIData, i));
+    }
+
+    const $grayButton = document.createElement('button');
+    $grayButton.className = 'gray-button';
+    $grayButton.textContent = 'View Recent Launches';
+    $newSection.appendChild($grayButton);
+  } else {
+    var $h3 = document.createElement('h3');
+    $h3.className = 'loading-msg';
+    $h3.textContent = launchAPIData.detail;
+    $newSection.appendChild($h3);
+
+    var $loadingDiv = document.createElement('div');
+    $loadingDiv.className = 'loading';
+    $newSection.appendChild($loadingDiv);
+
+    var $loadingImg = document.createElement('img');
+    $loadingImg.src = 'images/rocketwhite.png';
+    $loadingImg.setAttribute('alt', 'Rocket icon');
+    $loadingDiv.appendChild($loadingImg);
   }
 
-  const $grayButton = document.createElement('button');
-  $grayButton.className = 'gray-button';
-  $grayButton.textContent = 'View Recent Launches';
-  $newSection.appendChild($grayButton);
 
   return $newSection;
 }
