@@ -28,6 +28,7 @@ header img {
 main {
   max-width: 1000px;
   margin: 0 auto;
+  margin: 0 0.5rem;
 }
 
 main h1 {
