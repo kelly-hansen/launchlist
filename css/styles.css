@@ -1,12 +1,12 @@
 body {
-  background-color: rgb(80, 80, 80);
+  background-color: rgb(60, 60, 60);
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   color: white;
 }
 
 header {
   height: 4rem;
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(40, 40, 40);
   font-family: 'Gugi', 'Roboto', Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
@@ -20,4 +20,47 @@ header h1 {
 header img {
   width: 2.5rem;
   margin-right: 0.5rem;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+main h1 {
+  text-align: center;
+  margin: 2.5rem 0;
+}
+
+.launch-item {
+  width: 85%;
+  height: 3rem;
+  margin: 1.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(240, 163, 0);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.launch-item img {
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+.gray-button {
+  width: 85%;
+  height: 3rem;
+  margin: 1.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(125, 125, 125);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
 }
