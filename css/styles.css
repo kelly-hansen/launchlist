@@ -39,10 +39,16 @@ main h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(240, 163, 0);
+  background-color: rgb(187, 128, 0);
   color: white;
   border: none;
   border-radius: 0.5rem;
+  transition: background-color 0.5s;
+}
+
+.launch-item:hover {
+  cursor: pointer;
+  background-color: rgb(255, 174, 0);
 }
 
 .launch-item img {
@@ -57,10 +63,15 @@ main h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(125, 125, 125);
+  background-color: rgb(110, 110, 110);
   color: white;
   font-weight: bold;
   font-size: 1rem;
   border: none;
   border-radius: 0.5rem;
+  transition: background-color 0.5s;
+}
+
+.gray-button:hover {
+  background-color: rgb(140, 140, 140);
 }
