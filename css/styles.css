@@ -30,6 +30,23 @@ main {
 main h1 {
   text-align: center;
   margin: 2.5rem 0;
+  font-size: 2rem;
+}
+
+.loading-msg {
+  text-align: center;
+  color: gray;
+}
+
+.loading {
+  height: 8rem;
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.loading img {
+  object-fit: contain;
 }
 
 .launch-item {
@@ -52,7 +69,7 @@ main h1 {
 }
 
 .launch-item img {
-  height: 2rem;
+  height: 1.5rem;
   margin-right: 0.5rem;
 }
 
