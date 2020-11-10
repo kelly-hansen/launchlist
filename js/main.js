@@ -12,6 +12,7 @@ function launchListSwitch(prevOrUpcoming) {
     const $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
     $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
+    currentView = prevOrUpcoming;
   });
   xhrLaunches.send();
 }
@@ -79,10 +80,4 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   return $newSection;
 }
 
-/*
-if (!upcomingLaunchList.results) {
-      const $loadingMsg = document.querySelector('.loading-msg');
-      $loadingMsg.textContent = upcomingLaunchList.detail;
-    } else {
-    }
-    */
+launchListSwitch('upcoming')
