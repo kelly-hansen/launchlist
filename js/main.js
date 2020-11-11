@@ -119,6 +119,59 @@ function renderLaunchDetails(launchIndex) {
   $dateTime.textContent = launchList.results[launchIndex].window_start;
   $newSection.appendChild($dateTime);
 
+  if (currentView === 'upcoming') {
+    var $timerContDiv = document.createElement('div');
+    $timerContDiv.className = 'timer';
+    $newSection.appendChild($timerContDiv);
+
+    for (var i = 0; i < 4; i++) {
+      var timeUnit = ['days', 'hours', 'minutes', 'seconds'];
+
+      var $timerDiv = document.createElement('div');
+
+      var $timerH2 = document.createElement('h2');
+      $timerH2.className = timeUnit[i];
+      $timerH2.textContent = '00';
+      $timerDiv.appendChild($timerH2);
+
+      var $timerP = document.createElement('p');
+      $timerP.textContent = timeUnit[i].toUpperCase;
+      $timerDiv.appendChild($timerP);
+
+      $timerContDiv.appendChild($timerDiv);
+
+      if (i < 3) {
+        var $separatorH2 = document.createElement('h2');
+        $separatorH2.textContent = ':';
+        $timerContDiv.appendChild($separatorH2);
+      }
+    }
+    var $weatherButton = document.createElement('button');
+    $weatherButton.className = 'orange-button';
+    $weatherButton.textContent = 'Weather Forecast';
+    $newSection.appendChild($weatherButton);
+  } else if (currentView === 'previous') {
+    var $statusDiv = document.createElement('div');
+    $statusDiv.className = 'status';
+
+    var $statusH2 = document.createElement('h2');
+    $statusH2.textContent = 'Launch Status:';
+    $statusDiv.appendChild($statusH2);
+
+    var $statusH3 = document.createElement('h3');
+    $statusH3.textContent = launchList.results[launchIndex].status.name;
+    if ($statusH3.textContent === 'Success') {
+      $statusH3.className = 'green';
+    } else {
+      $statusH3.className = 'yellow';
+    }
+
+    $newSection.appendChild($statusDiv);
+  }
+
+
+
+
   return $newSection;
 }
 
