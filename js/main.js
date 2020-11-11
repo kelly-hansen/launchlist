@@ -10,7 +10,7 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-    removeAndAppendSection(prevOrUpcoming);
+    removeAndAppendLaunchList(prevOrUpcoming);
     if (prevOrUpcoming === 'upcoming') {
       currentView = 'upcoming';
       altView = 'previous';
@@ -18,7 +18,6 @@ function launchListSwitch(prevOrUpcoming) {
       currentView = 'previous';
       altView = 'upcoming';
     }
-    launchIndex = null;
     window.scrollTo({
       top: 0,
       left: 0,
@@ -28,10 +27,11 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.send();
 }
 
-function removeAndAppendSection(prevOrUpcoming) {
+function removeAndAppendLaunchList(prevOrUpcoming) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchList(prevOrUpcoming));
+  launchIndex = null;
 }
 
 function renderLaunchItem(i) {
@@ -184,7 +184,7 @@ function renderLaunchDetails(launchIndex) {
   $backToList.className = 'gray-button';
   $backToList.textContent = 'Back to List';
   $backToList.addEventListener('click', function () {
-    removeAndAppendSection(currentView);
+    removeAndAppendLaunchList(currentView);
   });
   $newSection.appendChild($backToList);
 
@@ -194,7 +194,11 @@ function renderLaunchDetails(launchIndex) {
 var launchIndex;
 function viewLaunchDetails(e) {
   if (!launchIndex) {
-    launchIndex = e.target.closest('button').getAttribute('data-id');
+    if (e.target.getAttribute('data-id')) {
+      launchIndex = e.target.getAttribute('data-id');
+    } else {
+      launchIndex = e.target.closest('button').getAttribute('data-id');
+    }
   }
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
