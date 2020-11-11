@@ -8,8 +8,8 @@ body {
 }
 
 header {
-  height: 4rem;
-  background-color: rgb(40, 40, 40);
+  height: 5rem;
+  background-image: linear-gradient(black, rgb(60, 60, 60));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,7 +146,7 @@ main h1 {
   margin: 0;
 }
 
-.orange-button {
+.weather-button {
   width: 85%;
   height: 3rem;
   margin: 1.5rem auto;
@@ -163,7 +163,7 @@ main h1 {
   transition: background-color 0.5s;
 }
 
-.orange-button:hover {
+.weather-button:hover {
   cursor: pointer;
   background-color: rgb(255, 174, 0);
 }
@@ -185,6 +185,35 @@ main h1 {
   color: yellow;
 }
 
-.hidden {
-  display: none;
+.weather-page {
+  text-align: center;
+}
+
+.weather-page h1 {
+  margin-bottom: 1rem;
+}
+
+.weather-page h2 {
+  margin-top: 0;
+}
+
+.weather-page div {
+  margin: 2rem 0;
+}
+
+.weather-page h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 0rem;
+  font-size: 1.5rem;
+}
+
+.weather-page p {
+  margin-top: .25rem;
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+
+.weather-page .temp {
+  color: rgb(50, 50, 255);
+  font-size: 2.5rem;
 }

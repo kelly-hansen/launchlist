@@ -10,7 +10,7 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-    removeAndAppendSection(prevOrUpcoming);
+    removeAndAppendLaunchList(prevOrUpcoming);
     if (prevOrUpcoming === 'upcoming') {
       currentView = 'upcoming';
       altView = 'previous';
@@ -27,16 +27,18 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.send();
 }
 
-function removeAndAppendSection(prevOrUpcoming) {
+function removeAndAppendLaunchList(prevOrUpcoming) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
-  $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
+  $main.appendChild(renderLaunchList(prevOrUpcoming));
+  launchIndex = null;
 }
 
-function renderLaunchItem(launchAPIData, i) {
+function renderLaunchItem(i) {
   var $launchItem = document.createElement('button');
   $launchItem.className = 'launch-item';
   $launchItem.setAttribute('data-id', i);
+  $launchItem.addEventListener('click', viewLaunchDetails);
 
   var $launchItemImg = document.createElement('img');
   $launchItemImg.src = 'images/rocketwhite.png';
@@ -44,13 +46,13 @@ function renderLaunchItem(launchAPIData, i) {
   $launchItem.appendChild($launchItemImg);
 
   var $launchItemP = document.createElement('p');
-  $launchItemP.textContent = launchAPIData.results[i].name;
+  $launchItemP.textContent = launchList.results[i].name;
   $launchItem.appendChild($launchItemP);
 
   return $launchItem;
 }
 
-function renderLaunchList(launchAPIData, prevOrUpcoming) {
+function renderLaunchList(prevOrUpcoming) {
   var h1Content;
   var grayButtonContent;
   if (prevOrUpcoming === 'previous') {
@@ -67,9 +69,9 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   $h1.textContent = h1Content;
   $newSection.appendChild($h1);
 
-  if (launchAPIData.results) {
+  if (launchList.results) {
     for (let i = 0; i < 10; i++) {
-      $newSection.appendChild(renderLaunchItem(launchAPIData, i));
+      $newSection.appendChild(renderLaunchItem(i));
     }
 
     var $grayButton = document.createElement('button');
@@ -83,7 +85,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   } else {
     var $h3 = document.createElement('h3');
     $h3.className = 'loading-msg';
-    $h3.textContent = launchAPIData.detail;
+    $h3.textContent = launchList.detail;
     $newSection.appendChild($h3);
 
     var $loadingDiv = document.createElement('div');
@@ -152,8 +154,11 @@ function renderLaunchDetails(launchIndex) {
       }
     }
     var $weatherButton = document.createElement('button');
-    $weatherButton.className = 'orange-button';
+    $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
+    $weatherButton.addEventListener('click', function () {
+      getWeather(launchIndex);
+    });
     $newSection.appendChild($weatherButton);
   } else if (currentView === 'previous') {
     var $statusDiv = document.createElement('div');
@@ -179,33 +184,82 @@ function renderLaunchDetails(launchIndex) {
   $backToList.className = 'gray-button';
   $backToList.textContent = 'Back to List';
   $backToList.addEventListener('click', function () {
-    removeAndAppendSection(currentView);
+    removeAndAppendLaunchList(currentView);
   });
   $newSection.appendChild($backToList);
 
   return $newSection;
 }
 
+var launchIndex;
 function viewLaunchDetails(e) {
-  var launchItemClick = false;
-  var launchIndex;
-  if (e.target.className === 'launch-item') {
-    launchItemClick = true;
-    launchIndex = e.target.getAttribute('data-id');
-  } else if (e.target.closest('button')) {
-    if (e.target.closest('button').className === 'launch-item') {
-      launchItemClick = true;
+  if (!launchIndex) {
+    if (e.target.getAttribute('data-id')) {
+      launchIndex = e.target.getAttribute('data-id');
+    } else {
       launchIndex = e.target.closest('button').getAttribute('data-id');
     }
-  }
-  if (!launchItemClick) {
-    return;
   }
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
 }
 
-window.addEventListener('click', viewLaunchDetails);
+var weather;
+var forecastDays = 7;
+function getWeather(launchIndex) {
+  var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
+  var lat = launchList.results[launchIndex].pad.latitude;
+  var lon = launchList.results[launchIndex].pad.longitude;
+  var xhrWeather = new XMLHttpRequest();
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
+  xhrWeather.responseType = 'json';
+  xhrWeather.addEventListener('load', function () {
+    weather = xhrWeather.response;
+    var $existingSection = document.querySelector('section');
+    $main.removeChild($existingSection);
+    $main.appendChild(renderWeatherPage());
+  });
+  xhrWeather.send();
+}
+
+function renderWeatherPage() {
+  var $newSection = document.createElement('section');
+  $newSection.className = 'weather-page';
+
+  var $weatherH1 = document.createElement('h1');
+  $weatherH1.textContent = forecastDays + '-Day Forecast';
+  $newSection.appendChild($weatherH1);
+
+  var $weatherH2 = document.createElement('h2');
+  $weatherH2.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($weatherH2);
+
+  var $weatherDiv = document.createElement('div');
+  $newSection.appendChild($weatherDiv);
+
+  for (var i = 0; i < forecastDays; i++) {
+    var $date = document.createElement('h3');
+    $date.textContent = weather.data[i].valid_date;
+    $weatherDiv.appendChild($date);
+
+    var $temp = document.createElement('p');
+    $temp.className = 'temp';
+    $temp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
+    $weatherDiv.appendChild($temp);
+
+    var $description = document.createElement('p');
+    $description.textContent = weather.data[i].weather.description;
+    $weatherDiv.appendChild($description);
+  }
+
+  var $backToLaunchDetails = document.createElement('button');
+  $backToLaunchDetails.className = 'gray-button';
+  $backToLaunchDetails.textContent = 'Back to Launch Details';
+  $backToLaunchDetails.addEventListener('click', viewLaunchDetails);
+  $newSection.appendChild($backToLaunchDetails);
+
+  return $newSection;
+}
 
 launchListSwitch('upcoming');
