@@ -251,7 +251,7 @@ function renderWeatherPage() {
 
     var $temp = document.createElement('p');
     $temp.className = 'temp';
-    $temp.innerHTML = weather.data[i].high_temp + '&deg;F';
+    $temp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
     $weatherDiv.appendChild($temp);
 
     var $description = document.createElement('p');
