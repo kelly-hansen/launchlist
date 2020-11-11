@@ -167,3 +167,24 @@ main h1 {
   cursor: pointer;
   background-color: rgb(255, 174, 0);
 }
+
+.status {
+  margin: 4rem 0;
+}
+
+.status h2,
+.status h3 {
+  margin: 0.5rem 0;
+}
+
+.green {
+  color: lime;
+}
+
+.yellow {
+  color: yellow;
+}
+
+.hidden {
+  display: none;
+}
