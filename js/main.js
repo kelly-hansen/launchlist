@@ -209,7 +209,7 @@ function viewLaunchDetails(e) {
 window.addEventListener('click', viewLaunchDetails);
 
 var weather;
-var forecastDays = 5;
+var forecastDays = 7;
 function getWeather(launchIndex) {
   var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   var lat = launchList.results[launchIndex].pad.latitude;
@@ -231,7 +231,7 @@ function renderWeatherPage() {
   $newSection.className = 'weather-page';
 
   var $weatherH1 = document.createElement('h1');
-  $weatherH1.textContent = '5-Day Forecast';
+  $weatherH1.textContent = forecastDays + '-Day Forecast';
   $newSection.appendChild($weatherH1);
 
   var $weatherH2 = document.createElement('h2');
@@ -245,6 +245,11 @@ function renderWeatherPage() {
     var $date = document.createElement('h3');
     $date.textContent = weather.data[i].valid_date;
     $weatherDiv.appendChild($date);
+
+    var $temp = document.createElement('p');
+    $temp.className = 'temp';
+    $temp.innerHTML = weather.data[i].high_temp + '&deg;F';
+    $weatherDiv.appendChild($temp);
 
     var $description = document.createElement('p');
     $description.textContent = weather.data[i].weather.description;
