@@ -152,7 +152,7 @@ function renderLaunchDetails(launchIndex) {
       }
     }
     var $weatherButton = document.createElement('button');
-    $weatherButton.className = 'orange-button';
+    $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
     $newSection.appendChild($weatherButton);
   } else if (currentView === 'previous') {
