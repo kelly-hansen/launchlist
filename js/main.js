@@ -208,4 +208,13 @@ function viewLaunchDetails(e) {
 
 window.addEventListener('click', viewLaunchDetails);
 
+function getWeather(launchIndex) {
+  var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
+  var forecastDays = 5;
+  var lat = launchList.results[launchIndex].pad.latitude;
+  var lon = launchList.results[launchIndex].pad.longitude;
+  var xhrWeather = new XMLHttpRequest();
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon' + lon);
+}
+
 launchListSwitch('upcoming');
