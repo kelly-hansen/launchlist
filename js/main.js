@@ -212,6 +212,17 @@ function countdownTimer() {
   currentTime = currentTime.getTime();
   var timeToLaunch = launchTime - currentTime;
   var countdown = setInterval(function() {
+    var time = timeToLaunch;
+    var msPerDay = 100 * 60 * 60 * 24;
+    var days = Math.floor(time / msPerDay);
+    time -= msPerDay * days;
+    var msPerHour = 100 * 60 * 60;
+    var hours = Math.floor(time / msPerHour);
+    time -= msPerHour * hours;
+    var msPerMinute = 100 * 60;
+    var minutes = Math.floor(time / msPerMinute);
+    time -= msPerMinute * minutes;
+    var seconds = Math.floor(time / 100);
 
   }, 100);
 }
