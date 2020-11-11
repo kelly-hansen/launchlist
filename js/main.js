@@ -10,9 +10,7 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-    var $existingSection = document.querySelector('section');
-    $main.removeChild($existingSection);
-    $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
+    removeAndAppendSection(prevOrUpcoming);
     if (prevOrUpcoming === 'upcoming') {
       currentView = 'upcoming';
       altView = 'previous';
@@ -21,12 +19,18 @@ function launchListSwitch(prevOrUpcoming) {
       altView = 'upcoming';
     }
     window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'smooth'
-  });
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   });
   xhrLaunches.send();
+}
+
+function removeAndAppendSection(prevOrUpcoming) {
+  var $existingSection = document.querySelector('section');
+  $main.removeChild($existingSection);
+  $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
 }
 
 function renderLaunchItem(launchAPIData, i) {
@@ -70,7 +74,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
 
     var $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
-    $grayButton.addEventListener('click', function() {
+    $grayButton.addEventListener('click', function () {
       launchListSwitch(altView);
     });
     $grayButton.textContent = grayButtonContent;
@@ -95,4 +99,113 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   return $newSection;
 }
 
-launchListSwitch('upcoming')
+function renderLaunchDetails(launchIndex) {
+  var $newSection = document.createElement('section');
+  $newSection.className = 'launch-details';
+
+  var $rocketImg = document.createElement('img');
+  $rocketImg.src = 'images/rocketwhite.png';
+  $rocketImg.setAttribute('alt', 'Rocket icon');
+  $newSection.appendChild($rocketImg);
+
+  var $launchName = document.createElement('h2');
+  $launchName.textContent = launchList.results[launchIndex].name;
+  $newSection.appendChild($launchName);
+
+  var $agencyName = document.createElement('h3');
+  $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
+  $newSection.appendChild($agencyName);
+
+  var $location = document.createElement('h3');
+  $location.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($location);
+
+  var $dateTime = document.createElement('h3');
+  $dateTime.textContent = launchList.results[launchIndex].window_start;
+  $newSection.appendChild($dateTime);
+
+  if (currentView === 'upcoming') {
+    var $timerContDiv = document.createElement('div');
+    $timerContDiv.className = 'timer';
+    $newSection.appendChild($timerContDiv);
+
+    for (var i = 0; i < 4; i++) {
+      var timeUnit = ['days', 'hours', 'minutes', 'seconds'];
+
+      var $timerDiv = document.createElement('div');
+
+      var $timerH2 = document.createElement('h2');
+      $timerH2.className = timeUnit[i];
+      $timerH2.textContent = '00';
+      $timerDiv.appendChild($timerH2);
+
+      var $timerP = document.createElement('p');
+      $timerP.textContent = timeUnit[i].toUpperCase();
+      $timerDiv.appendChild($timerP);
+
+      $timerContDiv.appendChild($timerDiv);
+
+      if (i < 3) {
+        var $separatorH2 = document.createElement('h2');
+        $separatorH2.textContent = ':';
+        $timerContDiv.appendChild($separatorH2);
+      }
+    }
+    var $weatherButton = document.createElement('button');
+    $weatherButton.className = 'orange-button';
+    $weatherButton.textContent = 'Weather Forecast';
+    $newSection.appendChild($weatherButton);
+  } else if (currentView === 'previous') {
+    var $statusDiv = document.createElement('div');
+    $statusDiv.className = 'status';
+
+    var $statusH2 = document.createElement('h2');
+    $statusH2.textContent = 'Launch Status:';
+    $statusDiv.appendChild($statusH2);
+
+    var $statusH3 = document.createElement('h3');
+    $statusH3.textContent = launchList.results[launchIndex].status.name;
+    if ($statusH3.textContent === 'Success') {
+      $statusH3.className = 'green';
+    } else {
+      $statusH3.className = 'yellow';
+    }
+    $statusDiv.appendChild($statusH3);
+
+    $newSection.appendChild($statusDiv);
+  }
+
+  var $backToList = document.createElement('button');
+  $backToList.className = 'gray-button';
+  $backToList.textContent = 'Back to List';
+  $backToList.addEventListener('click', function () {
+    removeAndAppendSection(currentView);
+  });
+  $newSection.appendChild($backToList);
+
+  return $newSection;
+}
+
+function viewLaunchDetails(e) {
+  var launchItemClick = false;
+  var launchIndex;
+  if (e.target.className === 'launch-item') {
+    launchItemClick = true;
+    launchIndex = e.target.getAttribute('data-id');
+  } else if (e.target.closest('button')) {
+    if (e.target.closest('button').className === 'launch-item') {
+      launchItemClick = true;
+      launchIndex = e.target.closest('button').getAttribute('data-id');
+    }
+  }
+  if (!launchItemClick) {
+    return;
+  }
+  var $existingSection = document.querySelector('section');
+  $main.removeChild($existingSection);
+  $main.appendChild(renderLaunchDetails(launchIndex));
+}
+
+window.addEventListener('click', viewLaunchDetails);
+
+launchListSwitch('upcoming');
