@@ -183,7 +183,15 @@ function renderLaunchDetails(launchIndex) {
 }
 
 function viewLaunchDetails(e) {
-  if (e.target.className !== 'launch-item') {
+  var launchItemClick = false;
+  if (e.target.className === 'launch-item') {
+    launchItemClick = true;
+  } else if (e.target.closest('button')) {
+    if (e.target.closest('button').className === 'launch-item') {
+      launchItemClick = true;
+    }
+  }
+  if (!launchItemClick) {
     return;
   }
   var launchIndex = e.target.getAttribute('data-id');
