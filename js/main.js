@@ -30,10 +30,10 @@ function launchListSwitch(prevOrUpcoming) {
 function removeAndAppendSection(prevOrUpcoming) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
-  $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
+  $main.appendChild(renderLaunchList(prevOrUpcoming));
 }
 
-function renderLaunchItem(launchAPIData, i) {
+function renderLaunchItem(i) {
   var $launchItem = document.createElement('button');
   $launchItem.className = 'launch-item';
   $launchItem.setAttribute('data-id', i);
@@ -44,13 +44,13 @@ function renderLaunchItem(launchAPIData, i) {
   $launchItem.appendChild($launchItemImg);
 
   var $launchItemP = document.createElement('p');
-  $launchItemP.textContent = launchAPIData.results[i].name;
+  $launchItemP.textContent = launchList.results[i].name;
   $launchItem.appendChild($launchItemP);
 
   return $launchItem;
 }
 
-function renderLaunchList(launchAPIData, prevOrUpcoming) {
+function renderLaunchList(prevOrUpcoming) {
   var h1Content;
   var grayButtonContent;
   if (prevOrUpcoming === 'previous') {
@@ -67,9 +67,9 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   $h1.textContent = h1Content;
   $newSection.appendChild($h1);
 
-  if (launchAPIData.results) {
+  if (launchList.results) {
     for (let i = 0; i < 10; i++) {
-      $newSection.appendChild(renderLaunchItem(launchAPIData, i));
+      $newSection.appendChild(renderLaunchItem(i));
     }
 
     var $grayButton = document.createElement('button');
@@ -83,7 +83,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   } else {
     var $h3 = document.createElement('h3');
     $h3.className = 'loading-msg';
-    $h3.textContent = launchAPIData.detail;
+    $h3.textContent = launchList.detail;
     $newSection.appendChild($h3);
 
     var $loadingDiv = document.createElement('div');
