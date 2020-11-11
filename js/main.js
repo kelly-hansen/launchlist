@@ -174,6 +174,9 @@ function renderLaunchDetails(launchIndex) {
 
 function viewLaunchDetails(e) {
   var launchIndex = e.target.getAttribute('data-id');
+  var $existingSection = document.querySelector('section');
+  $main.removeChild($existingSection);
+  $main.appendChild(renderLaunchDetails(launchIndex));
 }
 
 launchListSwitch('upcoming')
