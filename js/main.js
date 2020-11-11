@@ -186,9 +186,9 @@ function renderLaunchDetails(launchIndex) {
   return $newSection;
 }
 
+var launchIndex;
 function viewLaunchDetails(e) {
   var launchItemClick = false;
-  var launchIndex;
   if (e.target.className === 'launch-item') {
     launchItemClick = true;
     launchIndex = e.target.getAttribute('data-id');
