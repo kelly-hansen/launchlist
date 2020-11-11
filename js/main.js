@@ -18,6 +18,7 @@ function launchListSwitch(prevOrUpcoming) {
       currentView = 'previous';
       altView = 'upcoming';
     }
+    launchIndex = null;
     window.scrollTo({
       top: 0,
       left: 0,
@@ -37,6 +38,7 @@ function renderLaunchItem(i) {
   var $launchItem = document.createElement('button');
   $launchItem.className = 'launch-item';
   $launchItem.setAttribute('data-id', i);
+  $launchItem.addEventListener('click', viewLaunchDetails);
 
   var $launchItemImg = document.createElement('img');
   $launchItemImg.src = 'images/rocketwhite.png';
@@ -191,25 +193,13 @@ function renderLaunchDetails(launchIndex) {
 
 var launchIndex;
 function viewLaunchDetails(e) {
-  var launchItemClick = false;
-  if (e.target.className === 'launch-item') {
-    launchItemClick = true;
-    launchIndex = e.target.getAttribute('data-id');
-  } else if (e.target.closest('button')) {
-    if (e.target.closest('button').className === 'launch-item') {
-      launchItemClick = true;
-      launchIndex = e.target.closest('button').getAttribute('data-id');
-    }
-  }
-  if (!launchItemClick) {
-    return;
+  if (!launchIndex) {
+    launchIndex = e.target.closest('button').getAttribute('data-id');
   }
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
 }
-
-window.addEventListener('click', viewLaunchDetails);
 
 var weather;
 var forecastDays = 7;
