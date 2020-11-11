@@ -262,6 +262,7 @@ function renderWeatherPage() {
   var $backToLaunchDetails = document.createElement('button');
   $backToLaunchDetails.className = 'gray-button';
   $backToLaunchDetails.textContent = 'Back to Launch Details';
+  $backToLaunchDetails.addEventListener('click', viewLaunchDetails);
   $newSection.appendChild($backToLaunchDetails);
 
   return $newSection;
