@@ -173,6 +173,9 @@ function renderLaunchDetails(launchIndex) {
   var $backToList = document.createElement('button');
   $backToList.className = 'gray-button';
   $backToList.textContent = 'Back to List';
+  $backToList.addEventListener('click', function () {
+    launchListSwitch(currentView);
+  });
   $newSection.appendChild($backToList);
 
   return $newSection;
