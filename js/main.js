@@ -209,13 +209,13 @@ function viewLaunchDetails(e) {
 window.addEventListener('click', viewLaunchDetails);
 
 var weather;
+var forecastDays = 5;
 function getWeather(launchIndex) {
   var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
-  var forecastDays = 5;
   var lat = launchList.results[launchIndex].pad.latitude;
   var lon = launchList.results[launchIndex].pad.longitude;
   var xhrWeather = new XMLHttpRequest();
-  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon' + lon);
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function() {
     weather = xhrWeather.response;
@@ -224,6 +224,39 @@ function getWeather(launchIndex) {
     $main.appendChild(renderWeatherPage());
   });
   xhrWeather.send();
+}
+
+function renderWeatherPage() {
+  var $newSection = document.createElement('section');
+  $newSection.className = 'weather-page';
+
+  var $weatherH1 = document.createElement('h1');
+  $weatherH1.textContent = '5-Day Forecast';
+  $newSection.appendChild($weatherH1);
+
+  var $weatherH2 = document.createElement('h2');
+  $weatherH2.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($weatherH2);
+
+  var $weatherDiv = document.createElement('div');
+  $newSection.appendChild($weatherDiv);
+
+  for (var i = 0; i < forecastDays; i++) {
+    var $date = document.createElement('h3');
+    $date.textContent = weather.data[i].valid_date;
+    $weatherDiv.appendChild($date);
+
+    var $description = document.createElement('p');
+    $description.textContent = weather.data[i].weather.description;
+    $weatherDiv.appendChild($description);
+  }
+
+  var $backToLaunchDetails = document.createElement('button');
+  $backToLaunchDetails.className = 'gray-button';
+  $backToLaunchDetails.textContent = 'Back to Launch Details';
+  $newSection.appendChild($backToLaunchDetails);
+
+  return $newSection;
 }
 
 launchListSwitch('upcoming');
