@@ -21,10 +21,10 @@ function launchListSwitch(prevOrUpcoming) {
       altView = 'upcoming';
     }
     window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'smooth'
-  });
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   });
   xhrLaunches.send();
 }
@@ -70,7 +70,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
 
     var $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
-    $grayButton.addEventListener('click', function() {
+    $grayButton.addEventListener('click', function () {
       launchListSwitch(altView);
     });
     $grayButton.textContent = grayButtonContent;
@@ -97,6 +97,7 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
 
 function renderLaunchDetails(launchIndex) {
   var $newSection = document.createElement('section');
+  $newSection.className = 'launch-details';
 
   var $rocketImg = document.createElement('img');
   $rocketImg.src = 'images/rocketwhite.png';
@@ -135,7 +136,7 @@ function renderLaunchDetails(launchIndex) {
       $timerDiv.appendChild($timerH2);
 
       var $timerP = document.createElement('p');
-      $timerP.textContent = timeUnit[i].toUpperCase;
+      $timerP.textContent = timeUnit[i].toUpperCase();
       $timerDiv.appendChild($timerP);
 
       $timerContDiv.appendChild($timerDiv);
@@ -169,14 +170,24 @@ function renderLaunchDetails(launchIndex) {
     $newSection.appendChild($statusDiv);
   }
 
+  var $backToList = document.createElement('button');
+  $backToList.className = 'gray-button';
+  $backToList.textContent = 'Back to List';
+  $newSection.appendChild($backToList);
+
   return $newSection;
 }
 
 function viewLaunchDetails(e) {
+  if (e.target.className !== 'launch-item') {
+    return;
+  }
   var launchIndex = e.target.getAttribute('data-id');
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
 }
 
-launchListSwitch('upcoming')
+window.addEventListener('click', viewLaunchDetails);
+
+launchListSwitch('upcoming');
