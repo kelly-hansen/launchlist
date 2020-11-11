@@ -10,9 +10,7 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
     launchList = xhrLaunches.response;
-    var $existingSection = document.querySelector('section');
-    $main.removeChild($existingSection);
-    $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
+    removeAndAppendSection(prevOrUpcoming);
     if (prevOrUpcoming === 'upcoming') {
       currentView = 'upcoming';
       altView = 'previous';
@@ -27,6 +25,12 @@ function launchListSwitch(prevOrUpcoming) {
     });
   });
   xhrLaunches.send();
+}
+
+function removeAndAppendSection(prevOrUpcoming) {
+  var $existingSection = document.querySelector('section');
+  $main.removeChild($existingSection);
+  $main.appendChild(renderLaunchList(launchList, prevOrUpcoming));
 }
 
 function renderLaunchItem(launchAPIData, i) {
@@ -175,7 +179,7 @@ function renderLaunchDetails(launchIndex) {
   $backToList.className = 'gray-button';
   $backToList.textContent = 'Back to List';
   $backToList.addEventListener('click', function () {
-    launchListSwitch(currentView);
+    removeAndAppendSection(currentView);
   });
   $newSection.appendChild($backToList);
 
