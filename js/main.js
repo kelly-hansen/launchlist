@@ -205,6 +205,11 @@ function viewLaunchDetails(e) {
   $main.appendChild(renderLaunchDetails(launchIndex));
 }
 
+function countdownTimer() {
+  var launchTime = new Date(launchList.results[launchIndex].window_start);
+  var currentTime = new Date();
+}
+
 var weather;
 var forecastDays = 7;
 function getWeather(launchIndex) {
