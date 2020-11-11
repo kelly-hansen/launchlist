@@ -169,10 +169,11 @@ function renderLaunchDetails(launchIndex) {
     $newSection.appendChild($statusDiv);
   }
 
-
-
-
   return $newSection;
+}
+
+function viewLaunchDetails(e) {
+  var launchIndex = e.target.getAttribute('data-id');
 }
 
 launchListSwitch('upcoming')
