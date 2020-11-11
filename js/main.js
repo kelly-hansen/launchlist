@@ -184,17 +184,19 @@ function renderLaunchDetails(launchIndex) {
 
 function viewLaunchDetails(e) {
   var launchItemClick = false;
+  var launchIndex;
   if (e.target.className === 'launch-item') {
     launchItemClick = true;
+    launchIndex = e.target.getAttribute('data-id');
   } else if (e.target.closest('button')) {
     if (e.target.closest('button').className === 'launch-item') {
       launchItemClick = true;
+      launchIndex = e.target.closest('button').getAttribute('data-id');
     }
   }
   if (!launchItemClick) {
     return;
   }
-  var launchIndex = e.target.getAttribute('data-id');
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
