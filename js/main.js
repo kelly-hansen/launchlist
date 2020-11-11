@@ -95,4 +95,31 @@ function renderLaunchList(launchAPIData, prevOrUpcoming) {
   return $newSection;
 }
 
+function renderLaunchDetails(launchIndex) {
+  var $newSection = document.createElement('section');
+
+  var $rocketImg = document.createElement('img');
+  $rocketImg.src = 'images/rocketwhite.png';
+  $rocketImg.setAttribute('alt', 'Rocket icon');
+  $newSection.appendChild($rocketImg);
+
+  var $launchName = document.createElement('h2');
+  $launchName.textContent = launchList.results[launchIndex].name;
+  $newSection.appendChild($launchName);
+
+  var $agencyName = document.createElement('h3');
+  $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
+  $newSection.appendChild($agencyName);
+
+  var $location = document.createElement('h3');
+  $location.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($location);
+
+  var $dateTime = document.createElement('h3');
+  $dateTime.textContent = launchList.results[launchIndex].window_start;
+  $newSection.appendChild($dateTime);
+
+  return $newSection;
+}
+
 launchListSwitch('upcoming')
