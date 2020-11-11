@@ -154,6 +154,9 @@ function renderLaunchDetails(launchIndex) {
     var $weatherButton = document.createElement('button');
     $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
+    $weatherButton.addEventListener('click', function () {
+      getWeather(launchIndex);
+    });
     $newSection.appendChild($weatherButton);
   } else if (currentView === 'previous') {
     var $statusDiv = document.createElement('div');
@@ -217,7 +220,7 @@ function getWeather(launchIndex) {
   var xhrWeather = new XMLHttpRequest();
   xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
-  xhrWeather.addEventListener('load', function() {
+  xhrWeather.addEventListener('load', function () {
     weather = xhrWeather.response;
     var $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
