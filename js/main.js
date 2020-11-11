@@ -166,6 +166,7 @@ function renderLaunchDetails(launchIndex) {
     } else {
       $statusH3.className = 'yellow';
     }
+    $statusDiv.appendChild($statusH3);
 
     $newSection.appendChild($statusDiv);
   }
