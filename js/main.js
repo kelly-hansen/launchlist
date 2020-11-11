@@ -207,7 +207,9 @@ function viewLaunchDetails(e) {
 
 function countdownTimer() {
   var launchTime = new Date(launchList.results[launchIndex].window_start);
+  launchTime = launchTime.getTime();
   var currentTime = new Date();
+  currentTime = currentTime.getTime();
 }
 
 var weather;
