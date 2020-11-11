@@ -210,6 +210,10 @@ function countdownTimer() {
   launchTime = launchTime.getTime();
   var currentTime = new Date();
   currentTime = currentTime.getTime();
+  var timeToLaunch = launchTime - currentTime;
+  var countdown = setInterval(function() {
+
+  }, 100);
 }
 
 var weather;
