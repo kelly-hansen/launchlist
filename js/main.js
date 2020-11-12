@@ -124,7 +124,7 @@ function renderLaunchDetails(launchIndex) {
 
   var $dateTime = document.createElement('h3');
   var dateTime = new Date(launchList.results[launchIndex].window_start);
-  $dateTime.textContent = dateTime.toLocaleString('en-US');
+  $dateTime.textContent = dateTime.toLocaleString();
   $newSection.appendChild($dateTime);
 
   if (currentView === 'upcoming') {
@@ -297,7 +297,8 @@ function renderWeatherPage() {
 
   for (var i = 0; i < forecastDays; i++) {
     var $date = document.createElement('h3');
-    $date.textContent = weather.data[i].valid_date;
+    var weatherDate = new Date(weather.data[i].valid_date);
+    $date.textContent = weatherDate.toLocaleDateString();
     $weatherDiv.appendChild($date);
 
     var $temp = document.createElement('p');
