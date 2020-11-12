@@ -220,6 +220,9 @@ var timeToLaunch;
 
 function renderCountdown() {
   var time = Math.abs(timeToLaunch);
+  if (timeToLaunch < 0) {
+    time += 1000;
+  }
   var msPerDay = 1000 * 60 * 60 * 24;
   var days = Math.floor(time / msPerDay);
   time -= msPerDay * days;
@@ -231,6 +234,10 @@ function renderCountdown() {
   time -= msPerMinute * minutes;
   var seconds = Math.floor(time / 1000);
 
+  if (timeToLaunch < 0) {
+    var $tMinus = document.querySelector('.t-');
+    $tMinus.textContent = 'T+';
+  }
   var $days = document.querySelector('.days');
   $days.textContent = ('0' + days).slice(-2);
   var $hours = document.querySelector('.hours');
@@ -250,10 +257,6 @@ function countdownTimer() {
   renderCountdown();
   countdown = setInterval(function () {
     timeToLaunch -= 1000;
-    if (timeToLaunch <= 0) {
-      clearInterval(countdown);
-      return;
-    }
     renderCountdown();
   }, 1000);
 }

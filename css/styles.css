@@ -127,7 +127,7 @@ main h1 {
 }
 
 .timer div {
-  width: 20%;
+  width: 19%;
 }
 
 .timer > h2 {
@@ -135,11 +135,11 @@ main h1 {
 }
 
 .timer h2.t- {
-  width: 11%;
+  width: 15%;
 }
 
 .timer h2 {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.25rem;
