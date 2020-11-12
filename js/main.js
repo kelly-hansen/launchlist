@@ -132,6 +132,23 @@ function renderLaunchDetails(launchIndex) {
   $dateTime.textContent = dateTime.toLocaleString();
   $newSection.appendChild($dateTime);
 
+  var $statusDiv = document.createElement('div');
+  $statusDiv.className = 'status';
+  $newSection.appendChild($statusDiv);
+
+  var $statusH2 = document.createElement('h2');
+  $statusH2.textContent = 'Launch Status:';
+  $statusDiv.appendChild($statusH2);
+
+  var $statusH3 = document.createElement('h3');
+  $statusH3.textContent = launchList.results[launchIndex].status.name;
+  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight' || $statusH3.textContent === 'In-Flight') {
+    $statusH3.className = 'green';
+  } else {
+    $statusH3.className = 'yellow';
+  }
+  $statusDiv.appendChild($statusH3);
+
   if (currentView === 'upcoming') {
     var $timerContDiv = document.createElement('div');
     $timerContDiv.className = 'timer';
@@ -164,6 +181,9 @@ function renderLaunchDetails(launchIndex) {
         $timerContDiv.appendChild($separatorH2);
       }
     }
+  }
+
+  if (currentView === 'upcoming') {
     var $weatherButton = document.createElement('button');
     $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
@@ -172,24 +192,6 @@ function renderLaunchDetails(launchIndex) {
       clearInterval(countdown);
     });
     $newSection.appendChild($weatherButton);
-  } else if (currentView === 'previous') {
-    var $statusDiv = document.createElement('div');
-    $statusDiv.className = 'status';
-
-    var $statusH2 = document.createElement('h2');
-    $statusH2.textContent = 'Launch Status:';
-    $statusDiv.appendChild($statusH2);
-
-    var $statusH3 = document.createElement('h3');
-    $statusH3.textContent = launchList.results[launchIndex].status.name;
-    if ($statusH3.textContent === 'Success') {
-      $statusH3.className = 'green';
-    } else {
-      $statusH3.className = 'yellow';
-    }
-    $statusDiv.appendChild($statusH3);
-
-    $newSection.appendChild($statusDiv);
   }
 
   var $backToList = document.createElement('button');
