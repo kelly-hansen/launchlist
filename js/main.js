@@ -158,6 +158,7 @@ function renderLaunchDetails(launchIndex) {
     $weatherButton.textContent = 'Weather Forecast';
     $weatherButton.addEventListener('click', function () {
       getWeather(launchIndex);
+      clearInterval(countdown);
     });
     $newSection.appendChild($weatherButton);
   } else if (currentView === 'previous') {
@@ -185,6 +186,7 @@ function renderLaunchDetails(launchIndex) {
   $backToList.textContent = 'Back to List';
   $backToList.addEventListener('click', function () {
     removeAndAppendLaunchList(currentView);
+    clearInterval(countdown);
   });
   $newSection.appendChild($backToList);
 
@@ -206,13 +208,14 @@ function viewLaunchDetails(e) {
   countdownTimer();
 }
 
+var countdown;
 function countdownTimer() {
   var launchTime = new Date(launchList.results[launchIndex].window_start);
   launchTime = launchTime.getTime();
   var currentTime = new Date();
   currentTime = currentTime.getTime();
   var timeToLaunch = launchTime - currentTime;
-  var countdown = setInterval(function () {
+  countdown = setInterval(function () {
     var time = timeToLaunch;
     var msPerDay = 1000 * 60 * 60 * 24;
     var days = Math.floor(time / msPerDay);
