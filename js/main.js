@@ -100,7 +100,7 @@ function renderLaunchList(prevOrUpcoming) {
   return $newSection;
 }
 
-function renderLaunchDetails(launchIndex) {
+function renderLaunchDetails(launchIndex, $launchImg) {
   var $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
@@ -108,15 +108,8 @@ function renderLaunchDetails(launchIndex) {
   $launchName.textContent = launchList.results[launchIndex].name;
   $newSection.appendChild($launchName);
 
-  var $rocketImg = document.createElement('img');
-  var suppliedImg = launchList.results[launchIndex].image;
-  if (suppliedImg) {
-    $rocketImg.src = suppliedImg;
-  } else {
-    $rocketImg.src = 'images/rocketwhite.png';
-  }
-  $rocketImg.setAttribute('alt', 'Rocket icon');
-  $newSection.appendChild($rocketImg);
+  $launchImg.setAttribute('alt', 'Rocket icon');
+  $newSection.appendChild($launchImg);
 
   var $agencyName = document.createElement('h3');
   $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
@@ -217,10 +210,6 @@ function renderLaunchDetails(launchIndex) {
 
 var launchIndex;
 function viewLaunchDetails(e) {
-  window.scrollTo({
-    top: 0,
-    left: 0
-  });
   if (!launchIndex) {
     if (e.target.getAttribute('data-id')) {
       launchIndex = e.target.getAttribute('data-id');
@@ -228,12 +217,25 @@ function viewLaunchDetails(e) {
       launchIndex = e.target.closest('button').getAttribute('data-id');
     }
   }
-  var $existingSection = document.querySelector('section');
-  $main.removeChild($existingSection);
-  $main.appendChild(renderLaunchDetails(launchIndex));
-  if (currentView === 'upcoming') {
-    countdownTimer();
+  var $launchImg = document.createElement('img');
+  var suppliedImg = launchList.results[launchIndex].image;
+  if (suppliedImg) {
+    $launchImg.src = suppliedImg;
+  } else {
+    $launchImg.src = 'images/rocketwhite.png';
   }
+  $launchImg.onload = function () {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
+    var $existingSection = document.querySelector('section');
+    $main.removeChild($existingSection);
+    $main.appendChild(renderLaunchDetails(launchIndex, $launchImg));
+    if (currentView === 'upcoming') {
+      countdownTimer();
+    }
+  };
 }
 
 var countdown;
