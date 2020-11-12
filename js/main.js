@@ -233,6 +233,11 @@ function countdownTimer() {
     var $seconds = document.querySelector('.seconds');
     $seconds.textContent = ('0' + seconds).slice(-2);
 
+    timeToLaunch -= 100;
+
+    if (timeToLaunch <= 0) {
+      clearInterval(countdown);
+    }
   }, 100);
 }
 
