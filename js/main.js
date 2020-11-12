@@ -18,16 +18,15 @@ function launchListSwitch(prevOrUpcoming) {
       currentView = 'previous';
       altView = 'upcoming';
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
   });
   xhrLaunches.send();
 }
 
 function removeAndAppendLaunchList(prevOrUpcoming) {
+  window.scrollTo({
+    top: 0,
+    left: 0
+  });
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchList(prevOrUpcoming));
@@ -218,6 +217,10 @@ function renderLaunchDetails(launchIndex) {
 
 var launchIndex;
 function viewLaunchDetails(e) {
+  window.scrollTo({
+    top: 0,
+    left: 0
+  });
   if (!launchIndex) {
     if (e.target.getAttribute('data-id')) {
       launchIndex = e.target.getAttribute('data-id');
@@ -289,6 +292,10 @@ function getWeather(launchIndex) {
   xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
     weather = xhrWeather.response;
     var $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
