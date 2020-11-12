@@ -110,8 +110,10 @@ main h1 {
 }
 
 .launch-details img {
-  height: 5rem;
-  margin-top: 2rem;
+  height: 20rem;
+  max-width: 85%;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
 .launch-details h3 {
@@ -150,9 +152,13 @@ main h1 {
   margin: 0;
 }
 
+.mission-title {
+  margin-bottom: 0.25rem;
+}
+
 .mission {
   width: 85%;
-  margin: 1rem auto;
+  margin: 0 auto;
   max-height: 9rem;
   overflow: auto;
   border: 1px solid gray;
@@ -183,7 +189,7 @@ main h1 {
 }
 
 .status {
-  margin: 4rem 0;
+  margin: 1rem 0;
 }
 
 .status h2,

@@ -105,6 +105,10 @@ function renderLaunchDetails(launchIndex) {
   var $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
+  var $launchName = document.createElement('h2');
+  $launchName.textContent = launchList.results[launchIndex].name;
+  $newSection.appendChild($launchName);
+
   var $rocketImg = document.createElement('img');
   var suppliedImg = launchList.results[launchIndex].image;
   if (suppliedImg) {
@@ -115,10 +119,6 @@ function renderLaunchDetails(launchIndex) {
   $rocketImg.setAttribute('alt', 'Rocket icon');
   $newSection.appendChild($rocketImg);
 
-  var $launchName = document.createElement('h2');
-  $launchName.textContent = launchList.results[launchIndex].name;
-  $newSection.appendChild($launchName);
-
   var $agencyName = document.createElement('h3');
   $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
   $newSection.appendChild($agencyName);
@@ -126,11 +126,6 @@ function renderLaunchDetails(launchIndex) {
   var $location = document.createElement('h3');
   $location.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($location);
-
-  var $dateTime = document.createElement('h3');
-  var dateTime = new Date(launchList.results[launchIndex].window_start);
-  $dateTime.textContent = dateTime.toLocaleString();
-  $newSection.appendChild($dateTime);
 
   var $statusDiv = document.createElement('div');
   $statusDiv.className = 'status';
@@ -183,9 +178,15 @@ function renderLaunchDetails(launchIndex) {
     }
   }
 
-  var $missionH2 = document.createElement('h2');
-  $missionH2.textContent = 'Mission';
-  $newSection.appendChild($missionH2);
+  var $dateTime = document.createElement('h3');
+  var dateTime = new Date(launchList.results[launchIndex].window_start);
+  $dateTime.textContent = dateTime.toLocaleString();
+  $newSection.appendChild($dateTime);
+
+  var $missionTitle = document.createElement('h2');
+  $missionTitle.className = 'mission-title';
+  $missionTitle.textContent = 'Mission';
+  $newSection.appendChild($missionTitle);
 
   var $mission = document.createElement('div');
   $mission.className = 'mission';
