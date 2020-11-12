@@ -219,7 +219,7 @@ var countdown;
 var timeToLaunch;
 
 function renderCountdown() {
-  var time = timeToLaunch;
+  var time = Math.abs(timeToLaunch);
   var msPerDay = 1000 * 60 * 60 * 24;
   var days = Math.floor(time / msPerDay);
   time -= msPerDay * days;
