@@ -110,8 +110,10 @@ main h1 {
 }
 
 .launch-details img {
-  height: 5rem;
-  margin-top: 2rem;
+  height: 20rem;
+  max-width: 85%;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
 .launch-details h3 {
@@ -127,7 +129,7 @@ main h1 {
 }
 
 .timer div {
-  width: 20%;
+  width: 19%;
 }
 
 .timer > h2 {
@@ -135,11 +137,11 @@ main h1 {
 }
 
 .timer h2.t- {
-  width: 11%;
+  width: 15%;
 }
 
 .timer h2 {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.25rem;
@@ -148,6 +150,20 @@ main h1 {
 .timer p {
   font-size: 0.75rem;
   margin: 0;
+}
+
+.mission-title {
+  margin-bottom: 0.25rem;
+}
+
+.mission {
+  width: 85%;
+  margin: 0 auto;
+  max-height: 9rem;
+  overflow: auto;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
 }
 
 .weather-button {
@@ -173,7 +189,7 @@ main h1 {
 }
 
 .status {
-  margin: 4rem 0;
+  margin: 1rem 0;
 }
 
 .status h2,

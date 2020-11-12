@@ -18,16 +18,15 @@ function launchListSwitch(prevOrUpcoming) {
       currentView = 'previous';
       altView = 'upcoming';
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
   });
   xhrLaunches.send();
 }
 
 function removeAndAppendLaunchList(prevOrUpcoming) {
+  window.scrollTo({
+    top: 0,
+    left: 0
+  });
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchList(prevOrUpcoming));
@@ -101,18 +100,16 @@ function renderLaunchList(prevOrUpcoming) {
   return $newSection;
 }
 
-function renderLaunchDetails(launchIndex) {
+function renderLaunchDetails(launchIndex, $launchImg) {
   var $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
-
-  var $rocketImg = document.createElement('img');
-  $rocketImg.src = 'images/rocketwhite.png';
-  $rocketImg.setAttribute('alt', 'Rocket icon');
-  $newSection.appendChild($rocketImg);
 
   var $launchName = document.createElement('h2');
   $launchName.textContent = launchList.results[launchIndex].name;
   $newSection.appendChild($launchName);
+
+  $launchImg.setAttribute('alt', 'Rocket icon');
+  $newSection.appendChild($launchImg);
 
   var $agencyName = document.createElement('h3');
   $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
@@ -122,9 +119,22 @@ function renderLaunchDetails(launchIndex) {
   $location.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($location);
 
-  var $dateTime = document.createElement('h3');
-  $dateTime.textContent = launchList.results[launchIndex].window_start;
-  $newSection.appendChild($dateTime);
+  var $statusDiv = document.createElement('div');
+  $statusDiv.className = 'status';
+  $newSection.appendChild($statusDiv);
+
+  var $statusH2 = document.createElement('h2');
+  $statusH2.textContent = 'Launch Status:';
+  $statusDiv.appendChild($statusH2);
+
+  var $statusH3 = document.createElement('h3');
+  $statusH3.textContent = launchList.results[launchIndex].status.name;
+  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight' || $statusH3.textContent === 'In-Flight') {
+    $statusH3.className = 'green';
+  } else {
+    $statusH3.className = 'yellow';
+  }
+  $statusDiv.appendChild($statusH3);
 
   if (currentView === 'upcoming') {
     var $timerContDiv = document.createElement('div');
@@ -158,6 +168,24 @@ function renderLaunchDetails(launchIndex) {
         $timerContDiv.appendChild($separatorH2);
       }
     }
+  }
+
+  var $dateTime = document.createElement('h3');
+  var dateTime = new Date(launchList.results[launchIndex].window_start);
+  $dateTime.textContent = dateTime.toLocaleString();
+  $newSection.appendChild($dateTime);
+
+  var $missionTitle = document.createElement('h2');
+  $missionTitle.className = 'mission-title';
+  $missionTitle.textContent = 'Mission';
+  $newSection.appendChild($missionTitle);
+
+  var $mission = document.createElement('div');
+  $mission.className = 'mission';
+  $mission.textContent = launchList.results[launchIndex].mission.description;
+  $newSection.appendChild($mission);
+
+  if (currentView === 'upcoming') {
     var $weatherButton = document.createElement('button');
     $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
@@ -166,24 +194,6 @@ function renderLaunchDetails(launchIndex) {
       clearInterval(countdown);
     });
     $newSection.appendChild($weatherButton);
-  } else if (currentView === 'previous') {
-    var $statusDiv = document.createElement('div');
-    $statusDiv.className = 'status';
-
-    var $statusH2 = document.createElement('h2');
-    $statusH2.textContent = 'Launch Status:';
-    $statusDiv.appendChild($statusH2);
-
-    var $statusH3 = document.createElement('h3');
-    $statusH3.textContent = launchList.results[launchIndex].status.name;
-    if ($statusH3.textContent === 'Success') {
-      $statusH3.className = 'green';
-    } else {
-      $statusH3.className = 'yellow';
-    }
-    $statusDiv.appendChild($statusH3);
-
-    $newSection.appendChild($statusDiv);
   }
 
   var $backToList = document.createElement('button');
@@ -207,19 +217,35 @@ function viewLaunchDetails(e) {
       launchIndex = e.target.closest('button').getAttribute('data-id');
     }
   }
-  var $existingSection = document.querySelector('section');
-  $main.removeChild($existingSection);
-  $main.appendChild(renderLaunchDetails(launchIndex));
-  if (currentView === 'upcoming') {
-    countdownTimer();
+  var $launchImg = document.createElement('img');
+  var suppliedImg = launchList.results[launchIndex].image;
+  if (suppliedImg) {
+    $launchImg.src = suppliedImg;
+  } else {
+    $launchImg.src = 'images/rocketwhite.png';
   }
+  $launchImg.onload = function () {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
+    var $existingSection = document.querySelector('section');
+    $main.removeChild($existingSection);
+    $main.appendChild(renderLaunchDetails(launchIndex, $launchImg));
+    if (currentView === 'upcoming') {
+      countdownTimer();
+    }
+  };
 }
 
 var countdown;
 var timeToLaunch;
 
 function renderCountdown() {
-  var time = timeToLaunch;
+  var time = Math.abs(timeToLaunch);
+  if (timeToLaunch < 0) {
+    time += 1000;
+  }
   var msPerDay = 1000 * 60 * 60 * 24;
   var days = Math.floor(time / msPerDay);
   time -= msPerDay * days;
@@ -231,6 +257,10 @@ function renderCountdown() {
   time -= msPerMinute * minutes;
   var seconds = Math.floor(time / 1000);
 
+  if (timeToLaunch < 0) {
+    var $tMinus = document.querySelector('.t-');
+    $tMinus.textContent = 'T+';
+  }
   var $days = document.querySelector('.days');
   $days.textContent = ('0' + days).slice(-2);
   var $hours = document.querySelector('.hours');
@@ -250,10 +280,6 @@ function countdownTimer() {
   renderCountdown();
   countdown = setInterval(function () {
     timeToLaunch -= 1000;
-    if (timeToLaunch <= 0) {
-      clearInterval(countdown);
-      return;
-    }
     renderCountdown();
   }, 1000);
 }
@@ -268,6 +294,10 @@ function getWeather(launchIndex) {
   xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
     weather = xhrWeather.response;
     var $existingSection = document.querySelector('section');
     $main.removeChild($existingSection);
@@ -293,7 +323,8 @@ function renderWeatherPage() {
 
   for (var i = 0; i < forecastDays; i++) {
     var $date = document.createElement('h3');
-    $date.textContent = weather.data[i].valid_date;
+    var weatherDate = new Date(weather.data[i].valid_date);
+    $date.textContent = weatherDate.toLocaleDateString();
     $weatherDiv.appendChild($date);
 
     var $temp = document.createElement('p');
