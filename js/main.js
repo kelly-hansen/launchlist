@@ -224,6 +224,15 @@ function countdownTimer() {
     time -= msPerMinute * minutes;
     var seconds = Math.floor(time / 100);
 
+    var $days = document.querySelector('.days');
+    $days.textContent = ('0' + days).slice(-2);
+    var $hours = document.querySelector('.hours');
+    $hours.textContent = ('0' + hours).slice(-2);
+    var $minutes = document.querySelector('.minutes');
+    $minutes.textContent = ('0' + minutes).slice(-2);
+    var $seconds = document.querySelector('.seconds');
+    $seconds.textContent = ('0' + seconds).slice(-2);
+
   }, 100);
 }
 
