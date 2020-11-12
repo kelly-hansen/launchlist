@@ -123,7 +123,8 @@ function renderLaunchDetails(launchIndex) {
   $newSection.appendChild($location);
 
   var $dateTime = document.createElement('h3');
-  $dateTime.textContent = launchList.results[launchIndex].window_start;
+  var dateTime = new Date(launchList.results[launchIndex].window_start);
+  $dateTime.textContent = dateTime.toLocaleString('en-US');
   $newSection.appendChild($dateTime);
 
   if (currentView === 'upcoming') {
