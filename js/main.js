@@ -209,39 +209,45 @@ function viewLaunchDetails(e) {
 }
 
 var countdown;
+var timeToLaunch;
+
+function renderCountdown() {
+  var time = timeToLaunch;
+  var msPerDay = 1000 * 60 * 60 * 24;
+  var days = Math.floor(time / msPerDay);
+  time -= msPerDay * days;
+  var msPerHour = 1000 * 60 * 60;
+  var hours = Math.floor(time / msPerHour);
+  time -= msPerHour * hours;
+  var msPerMinute = 1000 * 60;
+  var minutes = Math.floor(time / msPerMinute);
+  time -= msPerMinute * minutes;
+  var seconds = Math.floor(time / 1000);
+
+  var $days = document.querySelector('.days');
+  $days.textContent = ('0' + days).slice(-2);
+  var $hours = document.querySelector('.hours');
+  $hours.textContent = ('0' + hours).slice(-2);
+  var $minutes = document.querySelector('.minutes');
+  $minutes.textContent = ('0' + minutes).slice(-2);
+  var $seconds = document.querySelector('.seconds');
+  $seconds.textContent = ('0' + seconds).slice(-2);
+}
+
 function countdownTimer() {
   var launchTime = new Date(launchList.results[launchIndex].window_start);
   launchTime = launchTime.getTime();
   var currentTime = new Date();
   currentTime = currentTime.getTime();
-  var timeToLaunch = launchTime - currentTime;
+  timeToLaunch = launchTime - currentTime;
+  renderCountdown();
   countdown = setInterval(function () {
-    var time = timeToLaunch;
-    var msPerDay = 1000 * 60 * 60 * 24;
-    var days = Math.floor(time / msPerDay);
-    time -= msPerDay * days;
-    var msPerHour = 1000 * 60 * 60;
-    var hours = Math.floor(time / msPerHour);
-    time -= msPerHour * hours;
-    var msPerMinute = 1000 * 60;
-    var minutes = Math.floor(time / msPerMinute);
-    time -= msPerMinute * minutes;
-    var seconds = Math.floor(time / 1000);
-
-    var $days = document.querySelector('.days');
-    $days.textContent = ('0' + days).slice(-2);
-    var $hours = document.querySelector('.hours');
-    $hours.textContent = ('0' + hours).slice(-2);
-    var $minutes = document.querySelector('.minutes');
-    $minutes.textContent = ('0' + minutes).slice(-2);
-    var $seconds = document.querySelector('.seconds');
-    $seconds.textContent = ('0' + seconds).slice(-2);
-
     timeToLaunch -= 1000;
-
     if (timeToLaunch <= 0) {
       clearInterval(countdown);
+      return;
     }
+    renderCountdown();
   }, 1000);
 }
 
