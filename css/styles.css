@@ -127,11 +127,15 @@ main h1 {
 }
 
 .timer div {
-  width: 22%;
+  width: 20%;
 }
 
 .timer > h2 {
-  width: 4%;
+  width: 3%;
+}
+
+.timer h2.t- {
+  width: 11%;
 }
 
 .timer h2 {
@@ -203,12 +207,12 @@ main h1 {
 
 .weather-page h3 {
   margin-top: 2.5rem;
-  margin-bottom: 0rem;
+  margin-bottom: 0;
   font-size: 1.5rem;
 }
 
 .weather-page p {
-  margin-top: .25rem;
+  margin-top: 0.25rem;
   margin-bottom: 0;
   font-size: 1.25rem;
 }

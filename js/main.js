@@ -131,6 +131,11 @@ function renderLaunchDetails(launchIndex) {
     $timerContDiv.className = 'timer';
     $newSection.appendChild($timerContDiv);
 
+    var $tMinus = document.createElement('h2');
+    $tMinus.className = 't-';
+    $tMinus.textContent = 'T-';
+    $timerContDiv.appendChild($tMinus);
+
     for (var i = 0; i < 4; i++) {
       var timeUnit = ['days', 'hours', 'minutes', 'seconds'];
 
@@ -158,6 +163,7 @@ function renderLaunchDetails(launchIndex) {
     $weatherButton.textContent = 'Weather Forecast';
     $weatherButton.addEventListener('click', function () {
       getWeather(launchIndex);
+      clearInterval(countdown);
     });
     $newSection.appendChild($weatherButton);
   } else if (currentView === 'previous') {
@@ -185,6 +191,7 @@ function renderLaunchDetails(launchIndex) {
   $backToList.textContent = 'Back to List';
   $backToList.addEventListener('click', function () {
     removeAndAppendLaunchList(currentView);
+    clearInterval(countdown);
   });
   $newSection.appendChild($backToList);
 
@@ -203,6 +210,52 @@ function viewLaunchDetails(e) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
+  if (currentView === 'upcoming') {
+    countdownTimer();
+  }
+}
+
+var countdown;
+var timeToLaunch;
+
+function renderCountdown() {
+  var time = timeToLaunch;
+  var msPerDay = 1000 * 60 * 60 * 24;
+  var days = Math.floor(time / msPerDay);
+  time -= msPerDay * days;
+  var msPerHour = 1000 * 60 * 60;
+  var hours = Math.floor(time / msPerHour);
+  time -= msPerHour * hours;
+  var msPerMinute = 1000 * 60;
+  var minutes = Math.floor(time / msPerMinute);
+  time -= msPerMinute * minutes;
+  var seconds = Math.floor(time / 1000);
+
+  var $days = document.querySelector('.days');
+  $days.textContent = ('0' + days).slice(-2);
+  var $hours = document.querySelector('.hours');
+  $hours.textContent = ('0' + hours).slice(-2);
+  var $minutes = document.querySelector('.minutes');
+  $minutes.textContent = ('0' + minutes).slice(-2);
+  var $seconds = document.querySelector('.seconds');
+  $seconds.textContent = ('0' + seconds).slice(-2);
+}
+
+function countdownTimer() {
+  var launchTime = new Date(launchList.results[launchIndex].window_start);
+  launchTime = launchTime.getTime();
+  var currentTime = new Date();
+  currentTime = currentTime.getTime();
+  timeToLaunch = launchTime - currentTime;
+  renderCountdown();
+  countdown = setInterval(function () {
+    timeToLaunch -= 1000;
+    if (timeToLaunch <= 0) {
+      clearInterval(countdown);
+      return;
+    }
+    renderCountdown();
+  }, 1000);
 }
 
 var weather;
