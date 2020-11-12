@@ -106,7 +106,12 @@ function renderLaunchDetails(launchIndex) {
   $newSection.className = 'launch-details';
 
   var $rocketImg = document.createElement('img');
-  $rocketImg.src = 'images/rocketwhite.png';
+  var suppliedImg = launchList.results[launchIndex].image;
+  if (suppliedImg) {
+    $rocketImg.src = suppliedImg;
+  } else {
+    $rocketImg.src = 'images/rocketwhite.png';
+  }
   $rocketImg.setAttribute('alt', 'Rocket icon');
   $newSection.appendChild($rocketImg);
 
