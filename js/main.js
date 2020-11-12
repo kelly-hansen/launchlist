@@ -210,7 +210,9 @@ function viewLaunchDetails(e) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
-  countdownTimer();
+  if (currentView === 'upcoming') {
+    countdownTimer();
+  }
 }
 
 var countdown;
