@@ -203,6 +203,7 @@ function viewLaunchDetails(e) {
   var $existingSection = document.querySelector('section');
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchDetails(launchIndex));
+  countdownTimer();
 }
 
 function countdownTimer() {
@@ -211,18 +212,18 @@ function countdownTimer() {
   var currentTime = new Date();
   currentTime = currentTime.getTime();
   var timeToLaunch = launchTime - currentTime;
-  var countdown = setInterval(function() {
+  var countdown = setInterval(function () {
     var time = timeToLaunch;
-    var msPerDay = 100 * 60 * 60 * 24;
+    var msPerDay = 1000 * 60 * 60 * 24;
     var days = Math.floor(time / msPerDay);
     time -= msPerDay * days;
-    var msPerHour = 100 * 60 * 60;
+    var msPerHour = 1000 * 60 * 60;
     var hours = Math.floor(time / msPerHour);
     time -= msPerHour * hours;
-    var msPerMinute = 100 * 60;
+    var msPerMinute = 1000 * 60;
     var minutes = Math.floor(time / msPerMinute);
     time -= msPerMinute * minutes;
-    var seconds = Math.floor(time / 100);
+    var seconds = Math.floor(time / 1000);
 
     var $days = document.querySelector('.days');
     $days.textContent = ('0' + days).slice(-2);
@@ -233,12 +234,12 @@ function countdownTimer() {
     var $seconds = document.querySelector('.seconds');
     $seconds.textContent = ('0' + seconds).slice(-2);
 
-    timeToLaunch -= 100;
+    timeToLaunch -= 1000;
 
     if (timeToLaunch <= 0) {
       clearInterval(countdown);
     }
-  }, 100);
+  }, 1000);
 }
 
 var weather;
