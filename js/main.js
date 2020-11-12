@@ -183,6 +183,15 @@ function renderLaunchDetails(launchIndex) {
     }
   }
 
+  var $missionH2 = document.createElement('h2');
+  $missionH2.textContent = 'Mission';
+  $newSection.appendChild($missionH2);
+
+  var $mission = document.createElement('div');
+  $mission.className = 'mission';
+  $mission.textContent = launchList.results[launchIndex].mission.description;
+  $newSection.appendChild($mission);
+
   if (currentView === 'upcoming') {
     var $weatherButton = document.createElement('button');
     $weatherButton.className = 'weather-button';

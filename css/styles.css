@@ -150,6 +150,16 @@ main h1 {
   margin: 0;
 }
 
+.mission {
+  width: 85%;
+  margin: 1rem auto;
+  max-height: 9rem;
+  overflow: auto;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+
 .weather-button {
   width: 85%;
   height: 3rem;
