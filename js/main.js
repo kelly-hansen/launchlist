@@ -131,6 +131,11 @@ function renderLaunchDetails(launchIndex) {
     $timerContDiv.className = 'timer';
     $newSection.appendChild($timerContDiv);
 
+    var $tMinus = document.createElement('h2');
+    $tMinus.className = 't-';
+    $tMinus.textContent = 'T-';
+    $timerContDiv.appendChild($tMinus);
+
     for (var i = 0; i < 4; i++) {
       var timeUnit = ['days', 'hours', 'minutes', 'seconds'];
 
