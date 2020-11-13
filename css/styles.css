@@ -272,9 +272,11 @@ main h1 {
 
 .launch-forecast {
   width: 85%;
+  max-width: 400px;
   margin: 0 auto;
   color: gray;
   background-color: white;
+  border: 5px solid white;
   border-radius: 0.5rem;
   padding: 0.25rem;
 }
@@ -291,6 +293,7 @@ main h1 {
 
 .forecast-day {
   background-color: white;
+  border: 5px solid white;
   color: gray;
   padding: 0.25rem;
   margin: 0.5rem 0;
@@ -378,5 +381,30 @@ main h1 {
   .details-columns div {
     max-width: 40rem;
     padding: 0 3rem;
+  }
+
+  .forecast-cont {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .forecast-day {
+    width: 14%;
+  }
+
+  .forecast-day > h3 {
+    font-size: 1rem;
+  }
+
+  .forecast-day > p {
+    display: none;
+  }
+
+  .forecast-day .icon-temp {
+    flex-direction: column;
+  }
+
+  .forecast-day .icon-temp p {
+    font-size: 1.5rem;
   }
 }
