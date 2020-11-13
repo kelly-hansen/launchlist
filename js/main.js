@@ -161,7 +161,7 @@ function renderLaunchDetails(launchIndex, $launchImg) {
 
   var $statusH3 = document.createElement('h3');
   $statusH3.textContent = launchList.results[launchIndex].status.name;
-  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight' || $statusH3.textContent === 'In-Flight') {
+  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight') {
     $statusH3.className = 'green';
   } else {
     $statusH3.className = 'yellow';
