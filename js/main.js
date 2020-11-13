@@ -327,7 +327,7 @@ function renderWeatherPage() {
   $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($locationH2);
 
-  if (weatherIndex) {
+  if (weatherIndex !== undefined) {
     var $launchForecastDiv = document.createElement('div');
     $launchForecastDiv.className = 'launch-forecast';
     $newSection.appendChild($launchForecastDiv);
