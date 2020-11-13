@@ -392,10 +392,6 @@ main h1 {
     width: 14%;
   }
 
-  .forecast-day > h3 {
-    font-size: 1rem;
-  }
-
   .forecast-day > p {
     display: none;
   }

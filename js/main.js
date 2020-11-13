@@ -420,8 +420,9 @@ function renderWeatherPage() {
     }
 
     var $date = document.createElement('h3');
+    var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var weatherDateCont = new Date(weather.data[i].valid_date);
-    $date.textContent = weatherDateCont.toLocaleDateString();
+    $date.textContent = weekDays[weatherDateCont.getDay()];
     $dayDiv.appendChild($date);
 
     var $description = document.createElement('p');
