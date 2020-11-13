@@ -286,12 +286,13 @@ function countdownTimer() {
 
 var weather;
 var forecastDays = 7;
+var forecastUnits = 'I';
 function getWeather(launchIndex) {
   var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   var lat = launchList.results[launchIndex].pad.latitude;
   var lon = launchList.results[launchIndex].pad.longitude;
   var xhrWeather = new XMLHttpRequest();
-  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=' + forecastUnits + '&key=' + weatherbitApiKey + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
     window.scrollTo({
@@ -307,34 +308,109 @@ function getWeather(launchIndex) {
 }
 
 function renderWeatherPage() {
+  var weatherIndex;
+  for (var x = 0; x < weather.data.length; x++) {
+    var launchDate = new Date(launchList.results[launchIndex].window_start);
+    launchDate = launchDate.toLocaleDateString();
+    var weatherDate = new Date(weather.data[x].valid_date);
+    weatherDate = weatherDate.toLocaleDateString();
+    if (launchDate === weatherDate) {
+      weatherIndex = x;
+      break;
+    }
+  }
+
   var $newSection = document.createElement('section');
   $newSection.className = 'weather-page';
 
-  var $weatherH1 = document.createElement('h1');
-  $weatherH1.textContent = forecastDays + '-Day Forecast';
-  $newSection.appendChild($weatherH1);
+  var $locationH2 = document.createElement('h2');
+  $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($locationH2);
 
-  var $weatherH2 = document.createElement('h2');
-  $weatherH2.textContent = launchList.results[launchIndex].pad.location.name;
-  $newSection.appendChild($weatherH2);
+  if (weatherIndex) {
+    var $launchForecastDiv = document.createElement('div');
+    $launchForecastDiv.className = 'launch-forecast';
+    $newSection.appendChild($launchForecastDiv);
 
-  var $weatherDiv = document.createElement('div');
-  $newSection.appendChild($weatherDiv);
+    var $schedH3 = document.createElement('h3');
+    $schedH3.textContent = 'Scheduled Launch:';
+    $launchForecastDiv.appendChild($schedH3);
+
+    var $launchDateH3 = document.createElement('h3');
+    var launchDateContent = new Date(weather.data[weatherIndex].valid_date);
+    $launchDateH3.textContent = launchDateContent.toLocaleDateString();
+    $launchForecastDiv.appendChild($launchDateH3);
+
+    var $launchWeatherDesc = document.createElement('p');
+    $launchWeatherDesc.textContent = weather.data[weatherIndex].weather.description;
+    $launchForecastDiv.appendChild($launchWeatherDesc);
+
+    var $launchIconTemp = document.createElement('div');
+    $launchIconTemp.className = 'icon-temp';
+    $launchForecastDiv.appendChild($launchIconTemp);
+
+    var $launchWIcon = document.createElement('img');
+    $launchWIcon.src = 'images/weathericons/' + weather.data[weatherIndex].weather.icon + '.png';
+    $launchWIcon.setAttribute('alt', 'Weather Icon');
+    $launchIconTemp.appendChild($launchWIcon);
+
+    var $launchHighTemp = document.createElement('p');
+    $launchHighTemp.insertAdjacentHTML('afterbegin', weather.data[weatherIndex].high_temp + '&deg;F');
+    $launchIconTemp.appendChild($launchHighTemp);
+
+    var $launchPOP = document.createElement('p');
+    $launchPOP.textContent = 'Precipitation: ' + weather.data[weatherIndex].pop + '%';
+    $launchForecastDiv.appendChild($launchPOP);
+
+    var $launchRH = document.createElement('p');
+    $launchRH.textContent = 'Humidity: ' + weather.data[weatherIndex].rh + '%';
+    $launchForecastDiv.appendChild($launchRH);
+
+    var $launchWind = document.createElement('p');
+    $launchWind.textContent = 'Wind: ' + weather.data[weatherIndex].wind_spd + ' mph';
+    $launchForecastDiv.appendChild($launchWind);
+  }
+
+  var $dayForecastH2 = document.createElement('h2');
+  $dayForecastH2.textContent = forecastDays + '-Day Forecast';
+  $newSection.appendChild($dayForecastH2);
+
+  var $dayForecastDiv = document.createElement('div');
+  $dayForecastDiv.className = 'forecast-cont';
+  $newSection.appendChild($dayForecastDiv);
 
   for (var i = 0; i < forecastDays; i++) {
-    var $date = document.createElement('h3');
-    var weatherDate = new Date(weather.data[i].valid_date);
-    $date.textContent = weatherDate.toLocaleDateString();
-    $weatherDiv.appendChild($date);
+    var $dayDiv = document.createElement('div');
+    if (i === weatherIndex) {
+      $dayDiv.className = 'forecast-day equals-launch';
+    } else {
+      $dayDiv.className = 'forecast-day';
+    }
 
-    var $temp = document.createElement('p');
-    $temp.className = 'temp';
-    $temp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
-    $weatherDiv.appendChild($temp);
+    var $date = document.createElement('h3');
+    var weatherDateCont = new Date(weather.data[i].valid_date);
+    $date.textContent = weatherDateCont.toLocaleDateString();
+    $dayDiv.appendChild($date);
 
     var $description = document.createElement('p');
     $description.textContent = weather.data[i].weather.description;
-    $weatherDiv.appendChild($description);
+    $dayDiv.appendChild($description);
+
+    var $dayIconTemp = document.createElement('div');
+    $dayIconTemp.className = 'icon-temp';
+    $dayDiv.appendChild($dayIconTemp);
+
+    var $dayIcon = document.createElement('img');
+    $dayIcon.src = 'images/weathericons/' + weather.data[i].weather.icon + '.png';
+    $dayIcon.setAttribute('alt', 'Weather Icon');
+    $dayIconTemp.appendChild($dayIcon);
+
+    var $dayTemp = document.createElement('p');
+    $dayTemp.className = 'temp';
+    $dayTemp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
+    $dayIconTemp.appendChild($dayTemp);
+
+    $dayForecastDiv.appendChild($dayDiv);
   }
 
   var $backToLaunchDetails = document.createElement('button');

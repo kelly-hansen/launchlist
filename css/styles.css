@@ -209,31 +209,76 @@ main h1 {
   text-align: center;
 }
 
-.weather-page h1 {
-  margin-bottom: 1rem;
-}
-
-.weather-page h2 {
-  margin-top: 0;
-}
-
-.weather-page div {
-  margin: 2rem 0;
-}
-
 .weather-page h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 0;
-  font-size: 1.5rem;
-}
-
-.weather-page p {
-  margin-top: 0.25rem;
-  margin-bottom: 0;
+  margin: 0;
   font-size: 1.25rem;
 }
 
-.weather-page .temp {
-  color: rgb(50, 50, 255);
-  font-size: 2.5rem;
+.icon-temp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.launch-forecast {
+  width: 85%;
+  margin: 0 auto;
+  color: gray;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+
+.launch-forecast p {
+  margin: 0.25rem 0;
+}
+
+.forecast-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forecast-day {
+  background-color: white;
+  color: gray;
+  padding: 0.25rem;
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+  width: 85%;
+}
+
+.forecast-day p {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.forecast-day .icon-temp img {
+  height: 2.5rem;
+}
+
+.forecast-day .icon-temp p {
+  color: rgb(255, 174, 0);
+  font-size: 2rem;
+  margin-top: 0;
+  margin-left: 0.25rem;
+}
+
+.forecast-day.equals-launch {
+  border: 5px solid rgb(255, 174, 0);
+}
+
+.launch-forecast .icon-temp img {
+  height: 4rem;
+}
+
+.launch-forecast .icon-temp p {
+  color: rgb(255, 174, 0);
+  font-size: 3rem;
+  margin-top: 0;
+  margin-left: 0.5rem;
 }
