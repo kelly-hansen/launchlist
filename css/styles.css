@@ -55,7 +55,7 @@ main h1 {
 
 .launch-item {
   width: 85%;
-  max-width: 500px;
+  max-width: 700px;
   height: 7.5rem;
   display: flex;
   justify-content: flex-end;
@@ -126,6 +126,7 @@ main h1 {
 
 .gray-button {
   width: 85%;
+  max-width: 400px;
   height: 3rem;
   margin: 1.5rem auto;
   display: flex;
@@ -208,6 +209,7 @@ main h1 {
 
 .weather-button {
   width: 85%;
+  max-width: 400px;
   height: 3rem;
   margin: 1.5rem auto;
   padding: 0 1rem;
@@ -321,4 +323,32 @@ main h1 {
   font-size: 3rem;
   margin-top: 0;
   margin-left: 0.5rem;
+}
+
+@media screen and (min-width: 600px) {
+  .launch-item {
+    height: 12rem;
+  }
+
+  .launch-item .item-info {
+    padding: 0 2rem;
+  }
+
+  .launch-item h3 {
+    font-size: 1.5rem;
+  }
+
+  .launch-item p {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .launch-item .more-info {
+    margin-top: 1rem;
+  }
+
+  .launch-item .more-info button {
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
+  }
 }
