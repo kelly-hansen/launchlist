@@ -286,12 +286,13 @@ function countdownTimer() {
 
 var weather;
 var forecastDays = 7;
+var forecastUnits = 'I';
 function getWeather(launchIndex) {
   var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   var lat = launchList.results[launchIndex].pad.latitude;
   var lon = launchList.results[launchIndex].pad.longitude;
   var xhrWeather = new XMLHttpRequest();
-  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&lat=' + lat + '&lon=' + lon);
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=' + forecastUnits + '&key=' + weatherbitApiKey + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
     window.scrollTo({
@@ -326,7 +327,7 @@ function renderWeatherPage() {
   $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($locationH2);
 
-  //need if statement for determining if launch date is within 16 days
+  // need if statement for determining if launch date is within 16 days
   var $launchForecastDiv = document.createElement('div');
   $launchForecastDiv.className = 'launch-forecast';
   $newSection.appendChild($launchForecastDiv);
@@ -336,12 +337,26 @@ function renderWeatherPage() {
   $launchForecastDiv.appendChild($schedH3);
 
   var $launchDateH3 = document.createElement('h3');
-  var launchDateContent = new Date(weather.data[launchIndex].valid_date);
+  var launchDateContent = new Date(weather.data[weatherIndex].valid_date);
   $launchDateH3.textContent = launchDateContent.toLocaleDateString();
   $launchForecastDiv.appendChild($launchDateH3);
 
   var $launchWeatherDesc = document.createElement('p');
+  $launchWeatherDesc.textContent = weather.data[weatherIndex].weather.description;
+  $launchForecastDiv.appendChild($launchWeatherDesc);
 
+  var $launchIconTemp = document.createElement('div');
+  $launchIconTemp.className = 'icon-temp';
+  $launchForecastDiv.appendChild($launchIconTemp);
+
+  var $launchWIcon = document.createElement('img');
+  $launchWIcon.src = 'images/weathericons/' + weather.data[weatherIndex].weather.icon + '.png';
+  $launchWIcon.setAttribute('alt', 'Weather Icon');
+  $launchIconTemp.appendChild($launchWIcon);
+
+  var $launchHighTemp = document.createElement('p');
+  $launchHighTemp.insertAdjacentHTML('afterbegin', weather.data[weatherIndex].high_temp + '&deg;F');
+  $launchIconTemp.appendChild($launchHighTemp);
 
   //
 
