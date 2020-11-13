@@ -327,38 +327,49 @@ function renderWeatherPage() {
   $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($locationH2);
 
-  // need if statement for determining if launch date is within 16 days
-  var $launchForecastDiv = document.createElement('div');
-  $launchForecastDiv.className = 'launch-forecast';
-  $newSection.appendChild($launchForecastDiv);
+  if (weatherIndex) {
+    var $launchForecastDiv = document.createElement('div');
+    $launchForecastDiv.className = 'launch-forecast';
+    $newSection.appendChild($launchForecastDiv);
 
-  var $schedH3 = document.createElement('h3');
-  $schedH3.textContent = 'Scheduled Launch:';
-  $launchForecastDiv.appendChild($schedH3);
+    var $schedH3 = document.createElement('h3');
+    $schedH3.textContent = 'Scheduled Launch:';
+    $launchForecastDiv.appendChild($schedH3);
 
-  var $launchDateH3 = document.createElement('h3');
-  var launchDateContent = new Date(weather.data[weatherIndex].valid_date);
-  $launchDateH3.textContent = launchDateContent.toLocaleDateString();
-  $launchForecastDiv.appendChild($launchDateH3);
+    var $launchDateH3 = document.createElement('h3');
+    var launchDateContent = new Date(weather.data[weatherIndex].valid_date);
+    $launchDateH3.textContent = launchDateContent.toLocaleDateString();
+    $launchForecastDiv.appendChild($launchDateH3);
 
-  var $launchWeatherDesc = document.createElement('p');
-  $launchWeatherDesc.textContent = weather.data[weatherIndex].weather.description;
-  $launchForecastDiv.appendChild($launchWeatherDesc);
+    var $launchWeatherDesc = document.createElement('p');
+    $launchWeatherDesc.textContent = weather.data[weatherIndex].weather.description;
+    $launchForecastDiv.appendChild($launchWeatherDesc);
 
-  var $launchIconTemp = document.createElement('div');
-  $launchIconTemp.className = 'icon-temp';
-  $launchForecastDiv.appendChild($launchIconTemp);
+    var $launchIconTemp = document.createElement('div');
+    $launchIconTemp.className = 'icon-temp';
+    $launchForecastDiv.appendChild($launchIconTemp);
 
-  var $launchWIcon = document.createElement('img');
-  $launchWIcon.src = 'images/weathericons/' + weather.data[weatherIndex].weather.icon + '.png';
-  $launchWIcon.setAttribute('alt', 'Weather Icon');
-  $launchIconTemp.appendChild($launchWIcon);
+    var $launchWIcon = document.createElement('img');
+    $launchWIcon.src = 'images/weathericons/' + weather.data[weatherIndex].weather.icon + '.png';
+    $launchWIcon.setAttribute('alt', 'Weather Icon');
+    $launchIconTemp.appendChild($launchWIcon);
 
-  var $launchHighTemp = document.createElement('p');
-  $launchHighTemp.insertAdjacentHTML('afterbegin', weather.data[weatherIndex].high_temp + '&deg;F');
-  $launchIconTemp.appendChild($launchHighTemp);
+    var $launchHighTemp = document.createElement('p');
+    $launchHighTemp.insertAdjacentHTML('afterbegin', weather.data[weatherIndex].high_temp + '&deg;F');
+    $launchIconTemp.appendChild($launchHighTemp);
 
-  //
+    var $launchPOP = document.createElement('p');
+    $launchPOP.textContent = 'Precipitation: ' + weather.data[weatherIndex].pop + '%';
+    $launchForecastDiv.appendChild($launchPOP);
+
+    var $launchRH = document.createElement('p');
+    $launchRH.textContent = 'Humidity: ' + weather.data[weatherIndex].rh + '%';
+    $launchForecastDiv.appendChild($launchRH);
+
+    var $launchWind = document.createElement('p');
+    $launchWind.textContent = 'Wind: ' + weather.data[weatherIndex].wind_spd + ' mph';
+    $launchForecastDiv.appendChild($launchWind);
+  }
 
   var $dayForecastH2 = document.createElement('h2');
   $dayForecastH2.textContent = forecastDays + '-Day Forecast';
