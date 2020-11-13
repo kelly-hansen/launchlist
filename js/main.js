@@ -376,22 +376,41 @@ function renderWeatherPage() {
   $newSection.appendChild($dayForecastH2);
 
   var $dayForecastDiv = document.createElement('div');
+  $dayForecastDiv.className = 'forecast-cont';
   $newSection.appendChild($dayForecastDiv);
 
   for (var i = 0; i < forecastDays; i++) {
+    var $dayDiv = document.createElement('div');
+    if (i === weatherIndex) {
+      $dayDiv.className = 'forecast-day equals-launch';
+    } else {
+      $dayDiv.className = 'forecast-day';
+    }
+
     var $date = document.createElement('h3');
     var weatherDateCont = new Date(weather.data[i].valid_date);
     $date.textContent = weatherDateCont.toLocaleDateString();
-    $dayForecastDiv.appendChild($date);
-
-    var $temp = document.createElement('p');
-    $temp.className = 'temp';
-    $temp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
-    $dayForecastDiv.appendChild($temp);
+    $dayDiv.appendChild($date);
 
     var $description = document.createElement('p');
     $description.textContent = weather.data[i].weather.description;
-    $dayForecastDiv.appendChild($description);
+    $dayDiv.appendChild($description);
+
+    var $dayIconTemp = document.createElement('div');
+    $dayIconTemp.className = 'icon-temp';
+    $dayDiv.appendChild($dayIconTemp);
+
+    var $dayIcon = document.createElement('img');
+    $dayIcon.src = 'images/weathericons/' + weather.data[i].weather.icon + '.png';
+    $dayIcon.setAttribute('alt', 'Weather Icon');
+    $dayIconTemp.appendChild($dayIcon);
+
+    var $dayTemp = document.createElement('p');
+    $dayTemp.className = 'temp';
+    $dayTemp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
+    $dayIconTemp.appendChild($dayTemp);
+
+    $dayForecastDiv.appendChild($dayDiv);
   }
 
   var $backToLaunchDetails = document.createElement('button');
