@@ -34,19 +34,44 @@ function removeAndAppendLaunchList(prevOrUpcoming) {
 }
 
 function renderLaunchItem(i) {
-  var $launchItem = document.createElement('button');
+  var $launchItem = document.createElement('div');
   $launchItem.className = 'launch-item';
-  $launchItem.setAttribute('data-id', i);
-  $launchItem.addEventListener('click', viewLaunchDetails);
+
+  var $imgDiv = document.createElement('div');
+  $imgDiv.className = 'item-img';
+  $launchItem.appendChild($imgDiv);
 
   var $launchItemImg = document.createElement('img');
   $launchItemImg.src = 'images/rocketwhite.png';
   $launchItemImg.alt = 'Rocket icon';
-  $launchItem.appendChild($launchItemImg);
+  $imgDiv.appendChild($launchItemImg);
 
-  var $launchItemP = document.createElement('p');
-  $launchItemP.textContent = launchList.results[i].name;
-  $launchItem.appendChild($launchItemP);
+  var $infoDiv = document.createElement('div');
+  $infoDiv.className = 'item-info';
+  $launchItem.appendChild($infoDiv);
+
+  var $launchName = document.createElement('h3');
+  $launchName.textContent = launchList.results[i].name;
+  $infoDiv.appendChild($launchName);
+
+  var $launchLoc = document.createElement('p');
+  $launchLoc.textContent = launchList.results[i].pad.location.name;
+  $infoDiv.appendChild($launchLoc);
+
+  var $launchDate = document.createElement('p');
+  var launchDate = new Date(launchList.results[i].window_start);
+  $launchDate.textContent = launchDate.toLocaleString();
+  $infoDiv.appendChild($launchDate);
+
+  var $moreInfoDiv = document.createElement('div');
+  $moreInfoDiv.className = 'more-info';
+  $infoDiv.appendChild($moreInfoDiv);
+
+  var $moreInfoBtn = document.createElement('button');
+  $moreInfoBtn.textContent = 'More Info';
+  $moreInfoBtn.setAttribute('data-id', i);
+  $moreInfoBtn.addEventListener('click', viewLaunchDetails);
+  $moreInfoDiv.appendChild($moreInfoBtn);
 
   return $launchItem;
 }
