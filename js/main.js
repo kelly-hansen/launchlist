@@ -291,7 +291,7 @@ function getWeather(launchIndex) {
   var lat = launchList.results[launchIndex].pad.latitude;
   var lon = launchList.results[launchIndex].pad.longitude;
   var xhrWeather = new XMLHttpRequest();
-  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&days=' + forecastDays + '&lat=' + lat + '&lon=' + lon);
+  xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=I&key=' + weatherbitApiKey + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
     window.scrollTo({
