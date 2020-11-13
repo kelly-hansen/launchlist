@@ -129,24 +129,31 @@ function renderLaunchDetails(launchIndex, $launchImg) {
   var $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
-  var $launchName = document.createElement('h2');
+  var $launchName = document.createElement('h1');
   $launchName.textContent = launchList.results[launchIndex].name;
   $newSection.appendChild($launchName);
 
+  var $detailsColumns = document.createElement('div');
+  $detailsColumns.className = 'details-columns';
+  $newSection.appendChild($detailsColumns);
+
   $launchImg.setAttribute('alt', 'Rocket icon');
-  $newSection.appendChild($launchImg);
+  $detailsColumns.appendChild($launchImg);
+
+  var $detailsDiv = document.createElement('div');
+  $detailsColumns.appendChild($detailsDiv);
 
   var $agencyName = document.createElement('h3');
   $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
-  $newSection.appendChild($agencyName);
+  $detailsDiv.appendChild($agencyName);
 
   var $location = document.createElement('h3');
   $location.textContent = launchList.results[launchIndex].pad.location.name;
-  $newSection.appendChild($location);
+  $detailsDiv.appendChild($location);
 
   var $statusDiv = document.createElement('div');
   $statusDiv.className = 'status';
-  $newSection.appendChild($statusDiv);
+  $detailsDiv.appendChild($statusDiv);
 
   var $statusH2 = document.createElement('h2');
   $statusH2.textContent = 'Launch Status:';

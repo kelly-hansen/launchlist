@@ -371,6 +371,10 @@ main h1 {
     justify-content: center;
   }
 
+  .details-columns img {
+    max-width: 20rem;
+  }
+
   .details-columns div {
     max-width: 40rem;
     padding: 0 3rem;
