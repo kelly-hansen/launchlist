@@ -307,34 +307,65 @@ function getWeather(launchIndex) {
 }
 
 function renderWeatherPage() {
+  var weatherIndex;
+  for (var x = 0; x < weather.data.length; x++) {
+    var launchDate = new Date(launchList.results[launchIndex].window_start);
+    launchDate = launchDate.toLocaleDateString();
+    var weatherDate = new Date(weather.data[x].valid_date);
+    weatherDate = weatherDate.toLocaleDateString();
+    if (launchDate === weatherDate) {
+      weatherIndex = x;
+      break;
+    }
+  }
+
   var $newSection = document.createElement('section');
   $newSection.className = 'weather-page';
 
-  var $weatherH1 = document.createElement('h1');
-  $weatherH1.textContent = forecastDays + '-Day Forecast';
-  $newSection.appendChild($weatherH1);
+  var $locationH2 = document.createElement('h2');
+  $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
+  $newSection.appendChild($locationH2);
 
-  var $weatherH2 = document.createElement('h2');
-  $weatherH2.textContent = launchList.results[launchIndex].pad.location.name;
-  $newSection.appendChild($weatherH2);
+  //need if statement for determining if launch date is within 16 days
+  var $launchForecastDiv = document.createElement('div');
+  $launchForecastDiv.className = 'launch-forecast';
+  $newSection.appendChild($launchForecastDiv);
 
-  var $weatherDiv = document.createElement('div');
-  $newSection.appendChild($weatherDiv);
+  var $schedH3 = document.createElement('h3');
+  $schedH3.textContent = 'Scheduled Launch:';
+  $launchForecastDiv.appendChild($schedH3);
+
+  var $launchDateH3 = document.createElement('h3');
+  var launchDateContent = new Date(weather.data[launchIndex].valid_date);
+  $launchDateH3.textContent = launchDateContent.toLocaleDateString();
+  $launchForecastDiv.appendChild($launchDateH3);
+
+  var $launchWeatherDesc = document.createElement('p');
+
+
+  //
+
+  var $dayForecastH2 = document.createElement('h2');
+  $dayForecastH2.textContent = forecastDays + '-Day Forecast';
+  $newSection.appendChild($dayForecastH2);
+
+  var $dayForecastDiv = document.createElement('div');
+  $newSection.appendChild($dayForecastDiv);
 
   for (var i = 0; i < forecastDays; i++) {
     var $date = document.createElement('h3');
-    var weatherDate = new Date(weather.data[i].valid_date);
-    $date.textContent = weatherDate.toLocaleDateString();
-    $weatherDiv.appendChild($date);
+    var weatherDateCont = new Date(weather.data[i].valid_date);
+    $date.textContent = weatherDateCont.toLocaleDateString();
+    $dayForecastDiv.appendChild($date);
 
     var $temp = document.createElement('p');
     $temp.className = 'temp';
     $temp.insertAdjacentHTML('afterbegin', weather.data[i].high_temp + '&deg;F');
-    $weatherDiv.appendChild($temp);
+    $dayForecastDiv.appendChild($temp);
 
     var $description = document.createElement('p');
     $description.textContent = weather.data[i].weather.description;
-    $weatherDiv.appendChild($description);
+    $dayForecastDiv.appendChild($description);
   }
 
   var $backToLaunchDetails = document.createElement('button');
