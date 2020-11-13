@@ -150,7 +150,12 @@ main h1 {
   text-align: center;
 }
 
-.launch-details img {
+.launch-details h1 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.details-columns img {
   height: 20rem;
   max-width: 85%;
   object-fit: cover;
@@ -160,6 +165,8 @@ main h1 {
 .launch-details h3 {
   font-size: 1.25rem;
   font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .timer {
@@ -199,6 +206,7 @@ main h1 {
 
 .mission {
   width: 85%;
+  max-width: 700px;
   margin: 0 auto;
   max-height: 9rem;
   overflow: auto;
@@ -350,5 +358,24 @@ main h1 {
   .launch-item .more-info button {
     font-size: 1rem;
     padding: 0.5rem 2rem;
+  }
+
+  .launch-details h1 {
+    font-size: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .details-columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .details-columns img {
+    margin-right: 3rem;
+  }
+
+  .details-columns div {
+    max-width: 40rem;
   }
 }
