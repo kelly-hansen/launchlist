@@ -55,33 +55,73 @@ main h1 {
 
 .launch-item {
   width: 85%;
-  height: 3rem;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
+  max-width: 500px;
+  height: 7.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  background-color: rgb(187, 128, 0);
-  color: white;
-  border: none;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  background-color: rgb(110, 110, 110);
   border-radius: 0.5rem;
   transition: background-color 0.5s;
 }
 
-.launch-item:hover {
-  cursor: pointer;
-  background-color: rgb(255, 174, 0);
+.launch-item .item-img {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .launch-item img {
-  height: 1.5rem;
-  margin-right: 0.5rem;
+  max-height: 75%;
+  max-width: 75%;
 }
 
-.launch-item p {
+.launch-item .item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  padding-left: 0.5rem;
+}
+
+.launch-item h3 {
+  margin: 0;
+  font-size: 1.1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.launch-item p {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.launch-item .more-info {
+  margin-top: 0.5rem;
+}
+
+.launch-item .more-info button {
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(255, 174, 0);
+  transition: background-color 0.5s;
+}
+
+.launch-item .more-info button:hover {
+  cursor: pointer;
+  background-color: rgb(187, 128, 0);
 }
 
 .gray-button {
