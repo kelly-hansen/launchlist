@@ -34,19 +34,44 @@ function removeAndAppendLaunchList(prevOrUpcoming) {
 }
 
 function renderLaunchItem(i) {
-  var $launchItem = document.createElement('button');
+  var $launchItem = document.createElement('div');
   $launchItem.className = 'launch-item';
-  $launchItem.setAttribute('data-id', i);
-  $launchItem.addEventListener('click', viewLaunchDetails);
+
+  var $imgDiv = document.createElement('div');
+  $imgDiv.className = 'item-img';
+  $launchItem.appendChild($imgDiv);
 
   var $launchItemImg = document.createElement('img');
   $launchItemImg.src = 'images/rocketwhite.png';
   $launchItemImg.alt = 'Rocket icon';
-  $launchItem.appendChild($launchItemImg);
+  $imgDiv.appendChild($launchItemImg);
 
-  var $launchItemP = document.createElement('p');
-  $launchItemP.textContent = launchList.results[i].name;
-  $launchItem.appendChild($launchItemP);
+  var $infoDiv = document.createElement('div');
+  $infoDiv.className = 'item-info';
+  $launchItem.appendChild($infoDiv);
+
+  var $launchName = document.createElement('h3');
+  $launchName.textContent = launchList.results[i].name;
+  $infoDiv.appendChild($launchName);
+
+  var $launchLoc = document.createElement('p');
+  $launchLoc.textContent = launchList.results[i].pad.location.name;
+  $infoDiv.appendChild($launchLoc);
+
+  var $launchDate = document.createElement('p');
+  var launchDate = new Date(launchList.results[i].window_start);
+  $launchDate.textContent = launchDate.toLocaleString();
+  $infoDiv.appendChild($launchDate);
+
+  var $moreInfoDiv = document.createElement('div');
+  $moreInfoDiv.className = 'more-info';
+  $infoDiv.appendChild($moreInfoDiv);
+
+  var $moreInfoBtn = document.createElement('button');
+  $moreInfoBtn.textContent = 'More Info';
+  $moreInfoBtn.setAttribute('data-id', i);
+  $moreInfoBtn.addEventListener('click', viewLaunchDetails);
+  $moreInfoDiv.appendChild($moreInfoBtn);
 
   return $launchItem;
 }
@@ -104,24 +129,31 @@ function renderLaunchDetails(launchIndex, $launchImg) {
   var $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
-  var $launchName = document.createElement('h2');
+  var $launchName = document.createElement('h1');
   $launchName.textContent = launchList.results[launchIndex].name;
   $newSection.appendChild($launchName);
 
+  var $detailsColumns = document.createElement('div');
+  $detailsColumns.className = 'details-columns';
+  $newSection.appendChild($detailsColumns);
+
   $launchImg.setAttribute('alt', 'Rocket icon');
-  $newSection.appendChild($launchImg);
+  $detailsColumns.appendChild($launchImg);
+
+  var $detailsDiv = document.createElement('div');
+  $detailsColumns.appendChild($detailsDiv);
 
   var $agencyName = document.createElement('h3');
   $agencyName.textContent = launchList.results[launchIndex].launch_service_provider.name;
-  $newSection.appendChild($agencyName);
+  $detailsDiv.appendChild($agencyName);
 
   var $location = document.createElement('h3');
   $location.textContent = launchList.results[launchIndex].pad.location.name;
-  $newSection.appendChild($location);
+  $detailsDiv.appendChild($location);
 
   var $statusDiv = document.createElement('div');
   $statusDiv.className = 'status';
-  $newSection.appendChild($statusDiv);
+  $detailsDiv.appendChild($statusDiv);
 
   var $statusH2 = document.createElement('h2');
   $statusH2.textContent = 'Launch Status:';
@@ -129,7 +161,7 @@ function renderLaunchDetails(launchIndex, $launchImg) {
 
   var $statusH3 = document.createElement('h3');
   $statusH3.textContent = launchList.results[launchIndex].status.name;
-  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight' || $statusH3.textContent === 'In-Flight') {
+  if ($statusH3.textContent === 'Success' || $statusH3.textContent === 'Go' || $statusH3.textContent === 'In Flight') {
     $statusH3.className = 'green';
   } else {
     $statusH3.className = 'yellow';
@@ -327,7 +359,7 @@ function renderWeatherPage() {
   $locationH2.textContent = launchList.results[launchIndex].pad.location.name;
   $newSection.appendChild($locationH2);
 
-  if (weatherIndex) {
+  if (weatherIndex !== undefined) {
     var $launchForecastDiv = document.createElement('div');
     $launchForecastDiv.className = 'launch-forecast';
     $newSection.appendChild($launchForecastDiv);
@@ -388,8 +420,9 @@ function renderWeatherPage() {
     }
 
     var $date = document.createElement('h3');
+    var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var weatherDateCont = new Date(weather.data[i].valid_date);
-    $date.textContent = weatherDateCont.toLocaleDateString();
+    $date.textContent = weekDays[weatherDateCont.getDay()];
     $dayDiv.appendChild($date);
 
     var $description = document.createElement('p');

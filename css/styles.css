@@ -55,37 +55,78 @@ main h1 {
 
 .launch-item {
   width: 85%;
-  height: 3rem;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
+  max-width: 700px;
+  height: 7.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  background-color: rgb(187, 128, 0);
-  color: white;
-  border: none;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  background-color: rgb(80, 80, 80);
   border-radius: 0.5rem;
   transition: background-color 0.5s;
 }
 
-.launch-item:hover {
-  cursor: pointer;
-  background-color: rgb(255, 174, 0);
+.launch-item .item-img {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .launch-item img {
-  height: 1.5rem;
-  margin-right: 0.5rem;
+  max-height: 75%;
+  max-width: 75%;
 }
 
-.launch-item p {
+.launch-item .item-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 80%;
+  padding: 0 1rem;
+}
+
+.launch-item h3 {
+  margin: 0;
+  font-size: 1.1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.launch-item p {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.launch-item .more-info {
+  margin-top: 0.5rem;
+}
+
+.launch-item .more-info button {
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(187, 128, 0);
+  transition: background-color 0.5s;
+}
+
+.launch-item .more-info button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 174, 0);
+}
+
 .gray-button {
   width: 85%;
+  max-width: 400px;
   height: 3rem;
   margin: 1.5rem auto;
   display: flex;
@@ -109,7 +150,12 @@ main h1 {
   text-align: center;
 }
 
-.launch-details img {
+.launch-details h1 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.details-columns img {
   height: 20rem;
   max-width: 85%;
   object-fit: cover;
@@ -119,6 +165,8 @@ main h1 {
 .launch-details h3 {
   font-size: 1.25rem;
   font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .timer {
@@ -158,6 +206,7 @@ main h1 {
 
 .mission {
   width: 85%;
+  max-width: 700px;
   margin: 0 auto;
   max-height: 9rem;
   overflow: auto;
@@ -168,6 +217,7 @@ main h1 {
 
 .weather-button {
   width: 85%;
+  max-width: 400px;
   height: 3rem;
   margin: 1.5rem auto;
   padding: 0 1rem;
@@ -222,9 +272,11 @@ main h1 {
 
 .launch-forecast {
   width: 85%;
+  max-width: 400px;
   margin: 0 auto;
   color: gray;
   background-color: white;
+  border: 5px solid white;
   border-radius: 0.5rem;
   padding: 0.25rem;
 }
@@ -241,6 +293,7 @@ main h1 {
 
 .forecast-day {
   background-color: white;
+  border: 5px solid white;
   color: gray;
   padding: 0.25rem;
   margin: 0.5rem 0;
@@ -281,4 +334,73 @@ main h1 {
   font-size: 3rem;
   margin-top: 0;
   margin-left: 0.5rem;
+}
+
+@media screen and (min-width: 600px) {
+  .launch-item {
+    height: 12rem;
+  }
+
+  .launch-item .item-info {
+    padding: 0 2rem;
+  }
+
+  .launch-item h3 {
+    font-size: 1.5rem;
+  }
+
+  .launch-item p {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .launch-item .more-info {
+    margin-top: 1rem;
+  }
+
+  .launch-item .more-info button {
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .launch-details h1 {
+    font-size: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .details-columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .details-columns img {
+    max-width: 20rem;
+  }
+
+  .details-columns div {
+    max-width: 40rem;
+    padding: 0 3rem;
+  }
+
+  .forecast-cont {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .forecast-day {
+    width: 14%;
+  }
+
+  .forecast-day > p {
+    display: none;
+  }
+
+  .forecast-day .icon-temp {
+    flex-direction: column;
+  }
+
+  .forecast-day .icon-temp p {
+    font-size: 1.5rem;
+  }
 }
