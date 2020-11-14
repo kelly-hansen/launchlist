@@ -214,7 +214,11 @@ function renderLaunchDetails(launchIndex, $launchImg) {
 
   var $mission = document.createElement('div');
   $mission.className = 'mission';
-  $mission.textContent = launchList.results[launchIndex].mission.description;
+  if (launchList.results[launchIndex].mission) {
+    $mission.textContent = launchList.results[launchIndex].mission.description;
+  } else {
+    $mission.textContent = 'N/A';
+  }
   $newSection.appendChild($mission);
 
   if (currentView === 'upcoming') {
