@@ -9,14 +9,18 @@ function launchListSwitch(prevOrUpcoming) {
   xhrLaunches.open('GET', 'https://ll.thespacedevs.com/2.0.0/launch/' + prevOrUpcoming + '/?format=json');
   xhrLaunches.responseType = 'json';
   xhrLaunches.addEventListener('load', function () {
-    launchList = xhrLaunches.response;
-    removeAndAppendLaunchList(prevOrUpcoming);
-    if (prevOrUpcoming === 'upcoming') {
-      currentView = 'upcoming';
-      altView = 'previous';
+    if (xhrLaunches.status === 200 || xhrLaunches.status === 429) {
+      launchList = xhrLaunches.response;
+      removeAndAppendLaunchList(prevOrUpcoming);
+      if (prevOrUpcoming === 'upcoming') {
+        currentView = 'upcoming';
+        altView = 'previous';
+      } else {
+        currentView = 'previous';
+        altView = 'upcoming';
+      }
     } else {
-      currentView = 'previous';
-      altView = 'upcoming';
+      window.alert('Unable to retrieve launch data at this time');
     }
   });
   xhrLaunches.send();
@@ -331,14 +335,18 @@ function getWeather(launchIndex) {
   xhrWeather.open('GET', 'https://api.weatherbit.io/v2.0/forecast/daily?units=' + forecastUnits + '&key=' + weatherbitApiKey + '&lat=' + lat + '&lon=' + lon);
   xhrWeather.responseType = 'json';
   xhrWeather.addEventListener('load', function () {
-    window.scrollTo({
-      top: 0,
-      left: 0
-    });
-    weather = xhrWeather.response;
-    var $existingSection = document.querySelector('section');
-    $main.removeChild($existingSection);
-    $main.appendChild(renderWeatherPage());
+    if (xhrWeather.status === 200) {
+      window.scrollTo({
+        top: 0,
+        left: 0
+      });
+      weather = xhrWeather.response;
+      var $existingSection = document.querySelector('section');
+      $main.removeChild($existingSection);
+      $main.appendChild(renderWeatherPage());
+    } else {
+      window.alert('Unable to retreive weather data at this time');
+    }
   });
   xhrWeather.send();
 }
