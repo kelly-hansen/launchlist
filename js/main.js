@@ -2,9 +2,11 @@ var currentView = 'upcoming';
 var altView = 'previous';
 
 var $main = document.querySelector('main');
+var $loadingScreen = document.querySelector('.loading-screen');
 
 var launchList;
 function launchListSwitch(prevOrUpcoming) {
+  $loadingScreen.className = 'loading-screen';
   var xhrLaunches = new XMLHttpRequest();
   xhrLaunches.open('GET', 'https://ll.thespacedevs.com/2.0.0/launch/' + prevOrUpcoming + '/?format=json');
   xhrLaunches.responseType = 'json';
@@ -19,9 +21,11 @@ function launchListSwitch(prevOrUpcoming) {
         currentView = 'previous';
         altView = 'upcoming';
       }
+
     } else {
       window.alert('Unable to retrieve launch data at this time');
     }
+    $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.send();
 }
@@ -328,6 +332,7 @@ var weather;
 var forecastDays = 7;
 var forecastUnits = 'I';
 function getWeather(launchIndex) {
+  $loadingScreen.className = 'loading-screen';
   var weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   var lat = launchList.results[launchIndex].pad.latitude;
   var lon = launchList.results[launchIndex].pad.longitude;
@@ -347,6 +352,7 @@ function getWeather(launchIndex) {
     } else {
       window.alert('Unable to retreive weather data at this time');
     }
+    $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
 }
