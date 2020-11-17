@@ -254,6 +254,7 @@ function renderLaunchDetails(launchIndex, $launchImg) {
 
 var launchIndex;
 function viewLaunchDetails(e) {
+  $loadingScreen.className = 'loading-screen';
   if (!launchIndex) {
     if (e.target.getAttribute('data-id')) {
       launchIndex = e.target.getAttribute('data-id');
@@ -279,6 +280,7 @@ function viewLaunchDetails(e) {
     if (currentView === 'upcoming') {
       countdownTimer();
     }
+    $loadingScreen.className = 'loading-screen hidden';
   };
 }
 
