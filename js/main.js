@@ -5,12 +5,12 @@ const $main = document.querySelector('main');
 const $loadingScreen = document.querySelector('.loading-screen');
 
 let launchList;
-function launchListSwitch(prevOrUpcoming) {
+const launchListSwitch = prevOrUpcoming => {
   $loadingScreen.className = 'loading-screen';
   const xhrLaunches = new XMLHttpRequest();
   xhrLaunches.open('GET', `https://ll.thespacedevs.com/2.0.0/launch/${prevOrUpcoming}/?format=json`);
   xhrLaunches.responseType = 'json';
-  xhrLaunches.addEventListener('load', function () {
+  xhrLaunches.addEventListener('load', () => {
     if (xhrLaunches.status === 200 || xhrLaunches.status === 429) {
       launchList = xhrLaunches.response;
       removeAndAppendLaunchList(prevOrUpcoming);
@@ -28,9 +28,9 @@ function launchListSwitch(prevOrUpcoming) {
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.send();
-}
+};
 
-function removeAndAppendLaunchList(prevOrUpcoming) {
+const removeAndAppendLaunchList = prevOrUpcoming => {
   window.scrollTo({
     top: 0,
     left: 0
@@ -39,9 +39,9 @@ function removeAndAppendLaunchList(prevOrUpcoming) {
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchList(prevOrUpcoming));
   launchIndex = null;
-}
+};
 
-function renderLaunchItem(i) {
+const renderLaunchItem = i => {
   const $launchItem = document.createElement('div');
   $launchItem.className = 'launch-item';
 
@@ -82,9 +82,9 @@ function renderLaunchItem(i) {
   $moreInfoDiv.appendChild($moreInfoBtn);
 
   return $launchItem;
-}
+};
 
-function renderLaunchList(prevOrUpcoming) {
+const renderLaunchList = prevOrUpcoming => {
   let h1Content;
   let grayButtonContent;
   if (prevOrUpcoming === 'previous') {
@@ -108,9 +108,7 @@ function renderLaunchList(prevOrUpcoming) {
 
     const $grayButton = document.createElement('button');
     $grayButton.className = 'gray-button';
-    $grayButton.addEventListener('click', function () {
-      launchListSwitch(altView);
-    });
+    $grayButton.addEventListener('click', () => launchListSwitch(altView));
     $grayButton.textContent = grayButtonContent;
 
     $newSection.appendChild($grayButton);
@@ -131,9 +129,9 @@ function renderLaunchList(prevOrUpcoming) {
   }
 
   return $newSection;
-}
+};
 
-function renderLaunchDetails(launchIndex, $launchImg) {
+const renderLaunchDetails = (launchIndex, $launchImg) => {
   const $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
@@ -233,7 +231,7 @@ function renderLaunchDetails(launchIndex, $launchImg) {
     const $weatherButton = document.createElement('button');
     $weatherButton.className = 'weather-button';
     $weatherButton.textContent = 'Weather Forecast';
-    $weatherButton.addEventListener('click', function () {
+    $weatherButton.addEventListener('click', () => {
       getWeather(launchIndex);
       clearInterval(countdown);
     });
@@ -243,17 +241,17 @@ function renderLaunchDetails(launchIndex, $launchImg) {
   const $backToList = document.createElement('button');
   $backToList.className = 'gray-button';
   $backToList.textContent = 'Back to List';
-  $backToList.addEventListener('click', function () {
+  $backToList.addEventListener('click', () => {
     removeAndAppendLaunchList(currentView);
     clearInterval(countdown);
   });
   $newSection.appendChild($backToList);
 
   return $newSection;
-}
+};
 
 let launchIndex;
-function viewLaunchDetails(e) {
+const viewLaunchDetails = e => {
   $loadingScreen.className = 'loading-screen';
   if (!launchIndex) {
     if (e.target.getAttribute('data-id')) {
@@ -269,7 +267,7 @@ function viewLaunchDetails(e) {
   } else {
     $launchImg.src = 'images/rocketwhite.png';
   }
-  $launchImg.onload = function () {
+  $launchImg.onload = () => {
     window.scrollTo({
       top: 0,
       left: 0
@@ -282,12 +280,12 @@ function viewLaunchDetails(e) {
     }
     $loadingScreen.className = 'loading-screen hidden';
   };
-}
+};
 
 let countdown;
 let timeToLaunch;
 
-function renderCountdown() {
+const renderCountdown = () => {
   let time = Math.abs(timeToLaunch);
   if (timeToLaunch < 0) {
     time += 1000;
@@ -315,25 +313,25 @@ function renderCountdown() {
   $minutes.textContent = ('0' + minutes).slice(-2);
   const $seconds = document.querySelector('.seconds');
   $seconds.textContent = ('0' + seconds).slice(-2);
-}
+};
 
-function countdownTimer() {
+const countdownTimer = () => {
   let launchTime = new Date(launchList.results[launchIndex].window_start);
   launchTime = launchTime.getTime();
   let currentTime = new Date();
   currentTime = currentTime.getTime();
   timeToLaunch = launchTime - currentTime;
   renderCountdown();
-  countdown = setInterval(function () {
+  countdown = setInterval(() => {
     timeToLaunch -= 1000;
     renderCountdown();
   }, 1000);
-}
+};
 
 let weather;
 const forecastDays = 7;
 const forecastUnits = 'I';
-function getWeather(launchIndex) {
+const getWeather = launchIndex => {
   $loadingScreen.className = 'loading-screen';
   const weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   const lat = launchList.results[launchIndex].pad.latitude;
@@ -341,7 +339,7 @@ function getWeather(launchIndex) {
   const xhrWeather = new XMLHttpRequest();
   xhrWeather.open('GET', `https://api.weatherbit.io/v2.0/forecast/daily?units=${forecastUnits}&key=${weatherbitApiKey}&lat=${lat}&lon=${lon}`);
   xhrWeather.responseType = 'json';
-  xhrWeather.addEventListener('load', function () {
+  xhrWeather.addEventListener('load', () => {
     if (xhrWeather.status === 200) {
       window.scrollTo({
         top: 0,
@@ -357,9 +355,9 @@ function getWeather(launchIndex) {
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
-}
+};
 
-function renderWeatherPage() {
+const renderWeatherPage = () => {
   let weatherIndex;
   for (let x = 0; x < weather.data.length; x++) {
     let launchDate = new Date(launchList.results[launchIndex].window_start);
@@ -473,6 +471,6 @@ function renderWeatherPage() {
   $newSection.appendChild($backToLaunchDetails);
 
   return $newSection;
-}
+};
 
 launchListSwitch('upcoming');
