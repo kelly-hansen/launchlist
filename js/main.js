@@ -5,7 +5,7 @@ const $main = document.querySelector('main');
 const $loadingScreen = document.querySelector('.loading-screen');
 
 let launchList;
-const launchListSwitch = prevOrUpcoming => {
+function launchListSwitch(prevOrUpcoming) {
   $loadingScreen.className = 'loading-screen';
   const xhrLaunches = new XMLHttpRequest();
   xhrLaunches.open('GET', `https://ll.thespacedevs.com/2.0.0/launch/${prevOrUpcoming}/?format=json`);
@@ -28,9 +28,9 @@ const launchListSwitch = prevOrUpcoming => {
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.send();
-};
+}
 
-const removeAndAppendLaunchList = prevOrUpcoming => {
+function removeAndAppendLaunchList(prevOrUpcoming) {
   window.scrollTo({
     top: 0,
     left: 0
@@ -39,9 +39,9 @@ const removeAndAppendLaunchList = prevOrUpcoming => {
   $main.removeChild($existingSection);
   $main.appendChild(renderLaunchList(prevOrUpcoming));
   launchIndex = null;
-};
+}
 
-const renderLaunchItem = i => {
+function renderLaunchItem(i) {
   const $launchItem = document.createElement('div');
   $launchItem.className = 'launch-item';
 
@@ -82,9 +82,9 @@ const renderLaunchItem = i => {
   $moreInfoDiv.appendChild($moreInfoBtn);
 
   return $launchItem;
-};
+}
 
-const renderLaunchList = prevOrUpcoming => {
+function renderLaunchList(prevOrUpcoming) {
   let h1Content;
   let grayButtonContent;
   if (prevOrUpcoming === 'previous') {
@@ -129,9 +129,9 @@ const renderLaunchList = prevOrUpcoming => {
   }
 
   return $newSection;
-};
+}
 
-const renderLaunchDetails = (launchIndex, $launchImg) => {
+function renderLaunchDetails(launchIndex, $launchImg) {
   const $newSection = document.createElement('section');
   $newSection.className = 'launch-details';
 
@@ -248,10 +248,10 @@ const renderLaunchDetails = (launchIndex, $launchImg) => {
   $newSection.appendChild($backToList);
 
   return $newSection;
-};
+}
 
 let launchIndex;
-const viewLaunchDetails = e => {
+function viewLaunchDetails(e) {
   $loadingScreen.className = 'loading-screen';
   if (!launchIndex) {
     if (e.target.getAttribute('data-id')) {
@@ -280,12 +280,12 @@ const viewLaunchDetails = e => {
     }
     $loadingScreen.className = 'loading-screen hidden';
   };
-};
+}
 
 let countdown;
 let timeToLaunch;
 
-const renderCountdown = () => {
+function renderCountdown() {
   let time = Math.abs(timeToLaunch);
   if (timeToLaunch < 0) {
     time += 1000;
@@ -313,9 +313,9 @@ const renderCountdown = () => {
   $minutes.textContent = ('0' + minutes).slice(-2);
   const $seconds = document.querySelector('.seconds');
   $seconds.textContent = ('0' + seconds).slice(-2);
-};
+}
 
-const countdownTimer = () => {
+function countdownTimer() {
   let launchTime = new Date(launchList.results[launchIndex].window_start);
   launchTime = launchTime.getTime();
   let currentTime = new Date();
@@ -326,12 +326,12 @@ const countdownTimer = () => {
     timeToLaunch -= 1000;
     renderCountdown();
   }, 1000);
-};
+}
 
 let weather;
 const forecastDays = 7;
 const forecastUnits = 'I';
-const getWeather = launchIndex => {
+function getWeather(launchIndex) {
   $loadingScreen.className = 'loading-screen';
   const weatherbitApiKey = '9e69faa8384143cfb363ea4710be3c21';
   const lat = launchList.results[launchIndex].pad.latitude;
@@ -355,9 +355,9 @@ const getWeather = launchIndex => {
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
-};
+}
 
-const renderWeatherPage = () => {
+function renderWeatherPage() {
   let weatherIndex;
   for (let x = 0; x < weather.data.length; x++) {
     let launchDate = new Date(launchList.results[launchIndex].window_start);
@@ -471,6 +471,6 @@ const renderWeatherPage = () => {
   $newSection.appendChild($backToLaunchDetails);
 
   return $newSection;
-};
+}
 
 launchListSwitch('upcoming');
