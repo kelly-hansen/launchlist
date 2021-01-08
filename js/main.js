@@ -102,6 +102,20 @@ function renderLaunchList(prevOrUpcoming) {
   $newSection.appendChild($h1);
 
   if (launchList.results) {
+    const $statsDiv = document.createElement('div');
+    $statsDiv.className = 'list-stats';
+    $newSection.appendChild($statsDiv);
+
+    const statText = prevOrUpcoming === 'upcoming' ? 'Next' : 'Previous';
+
+    const $stat10Days = document.createElement('p');
+    $stat10Days.textContent = statText + ' 10 Days: ' + get10DaysStat(prevOrUpcoming);
+    $statsDiv.appendChild($stat10Days);
+
+    const $statTotal = document.createElement('p');
+    $statTotal.textContent = 'Total: ' + launchList.count;
+    $statsDiv.appendChild($statTotal);
+
     for (let i = 0; i < 10; i++) {
       $newSection.appendChild(renderLaunchItem(i));
     }
@@ -129,6 +143,26 @@ function renderLaunchList(prevOrUpcoming) {
   }
 
   return $newSection;
+}
+
+function get10DaysStat(prevOrUpcoming) {
+  let count10Days = 0;
+  for (let i = 0; i < launchList.results.length; i++) {
+    const curLaunchDate = new Date(launchList.results[i].window_start);
+    const date10Days = new Date();
+    if (prevOrUpcoming === 'upcoming') {
+      date10Days.setDate(date10Days.getDate() + 10);
+      if (Date.parse(curLaunchDate) < Date.parse(date10Days)) {
+        count10Days++;
+      }
+    } else {
+      date10Days.setDate(date10Days.getDate() - 10);
+      if (Date.parse(curLaunchDate) > Date.parse(date10Days)) {
+        count10Days++;
+      }
+    }
+  }
+  return count10Days;
 }
 
 function renderLaunchDetails(launchIndex, $launchImg) {
