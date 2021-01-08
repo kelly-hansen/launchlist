@@ -102,6 +102,18 @@ function renderLaunchList(prevOrUpcoming) {
   $newSection.appendChild($h1);
 
   if (launchList.results) {
+    const $statsDiv = document.createElement('div');
+    $statsDiv.className = 'list-stats';
+    $newSection.appendChild($statsDiv);
+
+    const $stat10Days = document.createElement('p');
+    $stat10Days.textContent = 'Next 10 Days: ' + 5;
+    $statsDiv.appendChild($stat10Days);
+
+    const $statTotal = document.createElement('p');
+    $statTotal.textContent = 'Total: ' + 15;
+    $statsDiv.appendChild($statTotal);
+
     for (let i = 0; i < 10; i++) {
       $newSection.appendChild(renderLaunchItem(i));
     }

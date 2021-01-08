@@ -33,8 +33,13 @@ main {
 
 main h1 {
   text-align: center;
-  margin: 2.5rem 0;
+  margin: 2.5rem 0 0 0;
   font-size: 2rem;
+}
+
+.list-stats {
+  text-align: center;
+  margin: 2.5rem 0;
 }
 
 .loading-msg {
