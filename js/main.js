@@ -388,12 +388,19 @@ function getWeather(launchIndex) {
       $main.removeChild($existingSection);
       $main.appendChild(renderWeatherPage());
     } else {
-      window.alert('Unable to retreive weather data at this time');
+      window.alert('Unable to retrieve weather data at this time');
     }
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.addEventListener('error', () => {
-    window.alert('Unable to retreive weather data at this time');
+    const $errorMessage = document.createElement('p');
+    $errorMessage.textContent = 'Unable to retrieve weather data at this time';
+
+    const $parentNode = document.querySelector('.launch-details');
+    const $referenceNode = document.querySelector('.gray-button');
+
+    $parentNode.insertBefore($errorMessage, $referenceNode);
+
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
