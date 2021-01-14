@@ -23,12 +23,14 @@ function launchListSwitch(prevOrUpcoming) {
       }
 
     } else {
-      window.alert('Unable to retrieve launch data at this time');
+      const $loadingMsg = document.querySelector('.loading-msg');
+      $loadingMsg.textContent = 'Unable to retrieve launch data at this time';
     }
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.addEventListener('error', () => {
-    window.alert('Unable to retreive launch data at this time');
+    const $loadingMsg = document.querySelector('.loading-msg');
+    $loadingMsg.textContent = 'Unable to retrieve launch data at this time';
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.send();
