@@ -27,6 +27,10 @@ function launchListSwitch(prevOrUpcoming) {
     }
     $loadingScreen.className = 'loading-screen hidden';
   });
+  xhrLaunches.addEventListener('error', () => {
+    window.alert('Unable to retreive launch data at this time');
+    $loadingScreen.className = 'loading-screen hidden';
+  });
   xhrLaunches.send();
 }
 
@@ -386,6 +390,10 @@ function getWeather(launchIndex) {
     } else {
       window.alert('Unable to retreive weather data at this time');
     }
+    $loadingScreen.className = 'loading-screen hidden';
+  });
+  xhrWeather.addEventListener('error', () => {
+    window.alert('Unable to retreive weather data at this time');
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
