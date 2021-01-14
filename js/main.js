@@ -23,8 +23,14 @@ function launchListSwitch(prevOrUpcoming) {
       }
 
     } else {
-      window.alert('Unable to retrieve launch data at this time');
+      const $loadingMsg = document.querySelector('.loading-msg');
+      $loadingMsg.textContent = 'Unable to retrieve launch data at this time';
     }
+    $loadingScreen.className = 'loading-screen hidden';
+  });
+  xhrLaunches.addEventListener('error', () => {
+    const $loadingMsg = document.querySelector('.loading-msg');
+    $loadingMsg.textContent = 'Unable to retrieve launch data at this time';
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrLaunches.send();
@@ -384,8 +390,25 @@ function getWeather(launchIndex) {
       $main.removeChild($existingSection);
       $main.appendChild(renderWeatherPage());
     } else {
-      window.alert('Unable to retreive weather data at this time');
+      const $errorMessage = document.createElement('p');
+      $errorMessage.textContent = 'Unable to retrieve weather data at this time';
+
+      const $parentNode = document.querySelector('.launch-details');
+      const $referenceNode = document.querySelector('.gray-button');
+
+      $parentNode.insertBefore($errorMessage, $referenceNode);
     }
+    $loadingScreen.className = 'loading-screen hidden';
+  });
+  xhrWeather.addEventListener('error', () => {
+    const $errorMessage = document.createElement('p');
+    $errorMessage.textContent = 'Unable to retrieve weather data at this time';
+
+    const $parentNode = document.querySelector('.launch-details');
+    const $referenceNode = document.querySelector('.gray-button');
+
+    $parentNode.insertBefore($errorMessage, $referenceNode);
+
     $loadingScreen.className = 'loading-screen hidden';
   });
   xhrWeather.send();
